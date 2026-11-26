@@ -148,45 +148,6 @@ hr { border: 0; height: 1px; background: var(--c-line); margin: 0; }
   padding-inline: var(--container-pad);
 }
 
-/* ---------- Боковой задник: фотографии зданий по краям страницы ----------
-   Полосы занимают ровно свободное поле по бокам контейнера, поэтому текст
-   не перекрывают; внутренний край плавно растворяется. Уже 1500px — их нет. */
-@media (min-width: 1500px) {
-  body::before,
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    z-index: 0;
-    width: min(calc((100vw - var(--container-max)) / 2), 360px);
-    background-image: url("../img/building-facade.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    filter: saturate(0.72) contrast(0.96) brightness(1.03);
-    opacity: 0.85;
-    pointer-events: none;
-  }
-  body::before {
-    left: 0;
-    background-position: 62% center;
-    -webkit-mask-image: linear-gradient(to right, #000 30%, rgba(0, 0, 0, 0) 100%);
-    mask-image: linear-gradient(to right, #000 30%, rgba(0, 0, 0, 0) 100%);
-  }
-  body::after {
-    right: 0;
-    /* Правый край — тот же кадр, но зеркальный и с другим кропом: читается
-       как другой ракурс. Маска задана в локальных координатах, поэтому после
-       scaleX(-1) направление градиента обратное — иначе тень ушла бы внутрь. */
-    background-position: 40% center;
-    transform: scaleX(-1);
-    -webkit-mask-image: linear-gradient(to right, #000 30%, rgba(0, 0, 0, 0) 100%);
-    mask-image: linear-gradient(to right, #000 30%, rgba(0, 0, 0, 0) 100%);
-  }
-  /* Служебная полоса прототипа остаётся поверх задника */
-  .proto-bar { position: relative; z-index: 1; }
-}
-
 .section { padding-block: var(--section-y); }
 .section--tight { padding-block: clamp(48px, 5vw, 72px); }
 .section--surface { background: var(--c-surface); }
@@ -703,33 +664,6 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 .listing-skeleton__line--short { width: 45%; }
 
 /* ---------- Маршрут сделки / таймлайн ---------- */
-/* Строка этапов + стрелки «назад / вперёд» в той же строке */
-.route-wrap {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--sp-3);
-  align-items: start;
-}
-.route__nav {
-  display: flex;
-  gap: var(--sp-2);
-  padding-top: 22px;
-}
-.route__arrow {
-  width: var(--tap);
-  height: var(--tap);
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--c-line-strong);
-  border-radius: 50%;
-  background: var(--c-white);
-  color: var(--c-green-800);
-  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
-              transform var(--dur-fast) var(--ease);
-}
-.route__arrow svg { width: 18px; height: 18px; }
-.route__arrow:hover { border-color: var(--c-terracotta); color: var(--c-terracotta-ink); }
-.route__arrow:active { transform: translateY(1px); }
 .route {
   position: relative;
   display: grid;
@@ -828,14 +762,24 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
   margin-top: 6px;
 }
 
-/* Шапка карточки: текст этапа слева, его иконка справа */
+/* Шапка карточки: строка «Шаг 03 · Оформление» слева, иконка этапа и
+   стрелки листания справа — всё на одной строке. */
 .route-detail__head {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--sp-5);
+  gap: var(--sp-3) var(--sp-4);
 }
-.route-detail__head-text { min-width: 0; }
+.route-detail__head-text { flex: 1 1 180px; min-width: 0; }
+.route-detail__actions {
+  flex: none;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.route-detail__nav { display: flex; gap: var(--sp-2); }
 .route-detail__icon {
   flex: none;
   width: 52px; height: 52px;
@@ -845,9 +789,26 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
   background: var(--c-milk);
   color: var(--c-green-800);
 }
+.route-detail__icon[hidden] { display: none; }
 .route-detail__icon svg,
 .route-detail__icon img { width: 28px; height: 28px; }
 .route-detail__icon img { object-fit: contain; }
+/* Стрелки «назад / вперёд» */
+.route__arrow {
+  width: var(--tap);
+  height: var(--tap);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--c-line-strong);
+  border-radius: 50%;
+  background: var(--c-milk);
+  color: var(--c-green-800);
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease);
+}
+.route__arrow svg { width: 18px; height: 18px; }
+.route__arrow:hover { border-color: var(--c-terracotta); color: var(--c-terracotta-ink); }
+.route__arrow:active { transform: translateY(1px); }
 .route-detail__list { display: grid; gap: 8px; }
 .route-detail__list li {
   display: flex;
@@ -1473,10 +1434,6 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
   .section__head { grid-template-columns: minmax(0, 1fr); }
   .section__head .head-aside { justify-self: start; }
   .page-head__grid { grid-template-columns: minmax(0, 1fr); }
-  /* До 1024px стрелки этапов не помещаются в одну строку со сеткой —
-     уводим их под этапы и выравниваем по правому краю. */
-  .route-wrap { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
-  .route__nav { padding-top: 0; justify-self: end; }
   .hero__grid { grid-template-columns: minmax(0, 1fr); }
   .hero__media { order: -1; }
   .hero__portrait { width: clamp(104px, 22vw, 150px); top: calc(-1 * clamp(6px, 2vw, 14px)); left: -6px; }
@@ -1517,6 +1474,8 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
   .sort select { width: 100%; }
   .hero__portrait { width: 116px; }
   .about__stamp { display: none; }
+  /* На узких экранах иконка этапа уступает место стрелкам листания */
+  .route-detail__icon { display: none; }
 }
 
 @media (max-width: 480px) {
@@ -1548,7 +1507,6 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 @media print {
   .site-header, .site-footer, .proto-bar, .drawer, .dialog, .toast { display: none !important; }
   body { background: #fff; }
-  body::before, body::after { display: none !important; }
 }
 
 

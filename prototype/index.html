@@ -221,50 +221,59 @@
           </div>
         </div>
 
-        <div class="route-wrap">
-          <div class="route" role="group" aria-label="Этапы сделки">
-            <button class="step" type="button" data-step="0" aria-pressed="false">
-              <span class="step__num">01</span>
-              <span class="step__icon"> <img src="assets/img/house-svgrepo-com.svg" alt="" width="40" height="40"></span>
-              <span class="step__title">Проверка объекта и документов</span>
-              <span class="step__text">Закрываем вопрос «с чем именно мы имеем дело» до внесения аванса.</span>
-            </button>
+        <div class="route" role="group" aria-label="Этапы сделки">
+          <button class="step" type="button" data-step="0" aria-pressed="false">
+            <span class="step__num">01</span>
+            <span class="step__icon"> <img src="assets/img/house-svgrepo-com.svg" alt="" width="40" height="40"></span>
+            <span class="step__title">Проверка объекта и документов</span>
+            <span class="step__text">Закрываем вопрос «с чем именно мы имеем дело» до внесения аванса.</span>
+          </button>
 
-            <button class="step" type="button" data-step="1" aria-pressed="false">
-              <span class="step__num">02</span>
-              <span class="step__icon"> <img src="assets/img/demostration-horn-svgrepo-com.svg" alt="" width="40" height="40"></span>
-              <span class="step__title">Переговоры и согласование условий</span>
-              <span class="step__text">Договариваемся о цене, сроках, порядке расчётов и передаче объекта.</span>
-            </button>
+          <button class="step" type="button" data-step="1" aria-pressed="false">
+            <span class="step__num">02</span>
+            <span class="step__icon"> <img src="assets/img/demostration-horn-svgrepo-com.svg" alt="" width="40" height="40"></span>
+            <span class="step__title">Переговоры и согласование условий</span>
+            <span class="step__text">Договариваемся о цене, сроках, порядке расчётов и передаче объекта.</span>
+          </button>
 
-            <button class="step" type="button" data-step="2" aria-pressed="false">
-              <span class="step__num">03</span>
-              <span class="step__icon"> <img src="assets/img/studying-exam-svgrepo-com.svg" alt="" width="40" height="40"></span>
-              <span class="step__title">Подготовка и оформление сделки</span>
-              <span class="step__text">Собираем комплект документов и проверяем формулировки договора.</span>
-            </button>
+          <button class="step" type="button" data-step="2" aria-pressed="false">
+            <span class="step__num">03</span>
+            <span class="step__icon"> <img src="assets/img/studying-exam-svgrepo-com.svg" alt="" width="40" height="40"></span>
+            <span class="step__title">Подготовка и оформление сделки</span>
+            <span class="step__text">Собираем комплект документов и проверяем формулировки договора.</span>
+          </button>
 
-            <button class="step" type="button" data-step="3" aria-pressed="false">
-              <span class="step__num">04</span>
-              <span class="step__icon"> <img src="assets/img/closing-close-svgrepo-com.svg" alt="" width="40" height="40"></span>
-              <span class="step__title">Регистрация и передача ключей</span>
-              <span class="step__text">Доводим сделку до результата и сопровождаем приём-передачу объекта.</span>
-            </button>
-          </div>
-
-          <div class="route__nav">
-            <button class="route__arrow" type="button" data-step-prev aria-controls="route-detail"
-                    aria-label="Предыдущий этап">
-              <span data-icon="chevron-left" aria-hidden="true"></span>
-            </button>
-            <button class="route__arrow" type="button" data-step-next aria-controls="route-detail"
-                    aria-label="Следующий этап">
-              <span data-icon="chevron-right" aria-hidden="true"></span>
-            </button>
-          </div>
+          <button class="step" type="button" data-step="3" aria-pressed="false">
+            <span class="step__num">04</span>
+            <span class="step__icon"> <img src="assets/img/closing-close-svgrepo-com.svg" alt="" width="40" height="40"></span>
+            <span class="step__title">Регистрация и передача ключей</span>
+            <span class="step__text">Доводим сделку до результата и сопровождаем приём-передачу объекта.</span>
+          </button>
         </div>
 
-        <div class="route-detail" id="route-detail" role="region" aria-live="polite" aria-label="Подробности выбранного этапа"></div>
+        <div class="route-detail" id="route-detail" role="region" aria-label="Подробности выбранного этапа">
+          <!-- Шапка карточки: строка «Шаг 03 · Оформление», иконка этапа и стрелки листания -->
+          <div class="route-detail__head">
+            <div class="route-detail__head-text" aria-live="polite">
+              <p class="route-detail__label" id="route-detail-label"></p>
+              <h3 class="route-detail__title" id="route-detail-title"></h3>
+            </div>
+            <div class="route-detail__actions">
+              <span class="route-detail__icon" id="route-detail-icon" aria-hidden="true" hidden></span>
+              <div class="route-detail__nav" role="group" aria-label="Листание этапов">
+                <button class="route__arrow" type="button" data-step-prev aria-controls="route-detail"
+                        aria-label="Предыдущий этап">
+                  <span data-icon="chevron-left" aria-hidden="true"></span>
+                </button>
+                <button class="route__arrow" type="button" data-step-next aria-controls="route-detail"
+                        aria-label="Следующий этап">
+                  <span data-icon="chevron-right" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <ul class="route-detail__list" id="route-detail-list" aria-live="polite"></ul>
+        </div>
 
         <p class="tiny" style="margin-top: 16px;">
           Описание этапов носит информационный характер и не заменяет юридическую консультацию

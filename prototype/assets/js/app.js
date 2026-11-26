@@ -615,13 +615,19 @@
   }
 
   /* ---------- Маршрут сделки ---------- */
+  /* Стрелки листания живут в шапке карточки этапа, поэтому обновляем только
+     текстовые узлы: кнопки не пересоздаются и не теряют фокус. */
   function initRoute() {
     var steps = $$('.step[data-step]');
     var panel = $('#route-detail');
-    var wrap = $('.route-wrap');
+    var labelEl = $('#route-detail-label');
+    var titleEl = $('#route-detail-title');
+    var iconEl = $('#route-detail-icon');
+    var listEl = $('#route-detail-list');
     var prevBtn = $('[data-step-prev]');
     var nextBtn = $('[data-step-next]');
     if (!steps.length || !panel || !DATA.routeSteps.length) return;
+    if (!labelEl || !titleEl || !listEl) return;
 
     var current = 0;
 
@@ -635,20 +641,16 @@
       });
       /* Иконка берётся из самого этапа: работает и для <img>, и для data-icon. */
       var iconBox = steps[index].querySelector('.step__icon');
-      var iconHTML = iconBox ? iconBox.innerHTML : '';
+      var iconHTML = iconBox ? iconBox.innerHTML.trim() : '';
 
-      panel.innerHTML =
-        '<div class="route-detail__head">' +
-          '<div class="route-detail__head-text">' +
-            '<p class="route-detail__label">' + esc(step.label) + '</p>' +
-            '<h3 class="route-detail__title">' + esc(step.detailTitle) + '</h3>' +
-          '</div>' +
-          (iconHTML.trim() ?
-            '<span class="route-detail__icon" aria-hidden="true">' + iconHTML + '</span>' : '') +
-        '</div>' +
-        '<ul class="route-detail__list">' +
-          step.bullets.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('') +
-        '</ul>';
+      labelEl.textContent = step.label;
+      titleEl.textContent = step.detailTitle;
+      if (iconEl) {
+        iconEl.innerHTML = iconHTML;
+        if (iconHTML) iconEl.removeAttribute('hidden');
+        else iconEl.setAttribute('hidden', '');
+      }
+      listEl.innerHTML = step.bullets.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('');
     }
 
     /* Листание по кругу: с 04 «вперёд» возвращает к 01 и наоборот */
@@ -663,15 +665,16 @@
     if (prevBtn) prevBtn.addEventListener('click', function () { shift(-1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { shift(1); });
 
-    /* Клавиши ← → работают, когда фокус внутри блока с этапами */
-    if (wrap) {
-      wrap.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowRight') { shift(1); e.preventDefault(); }
-        else if (e.key === 'ArrowLeft') { shift(-1); e.preventDefault(); }
-        else if (e.key === 'Home') { select(0); e.preventDefault(); }
-        else if (e.key === 'End') { select(steps.length - 1); e.preventDefault(); }
-      });
+    /* Клавиши ← → работают, когда фокус внутри блока этапов или карточки */
+    function onKeydown(e) {
+      if (e.key === 'ArrowRight') { shift(1); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft') { shift(-1); e.preventDefault(); }
+      else if (e.key === 'Home') { select(0); e.preventDefault(); }
+      else if (e.key === 'End') { select(steps.length - 1); e.preventDefault(); }
     }
+    var group = $('.route');
+    if (group) group.addEventListener('keydown', onKeydown);
+    panel.addEventListener('keydown', onKeydown);
 
     select(0);
   }
