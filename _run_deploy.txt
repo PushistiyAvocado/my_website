@@ -1,0 +1,2 @@
+﻿Синхронизирую файлы: E:\Building web site\Недвижемость
+                 ->  E:\Building web site\Real_estate\my_website

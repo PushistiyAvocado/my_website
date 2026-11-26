@@ -1,0 +1,4 @@
+﻿deploy.ps1 first bytes: 239 187 191
+deploy.ps1 bytes: 4922
+deploy.cmd bytes: 610
+PS syntax: True
