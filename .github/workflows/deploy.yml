@@ -26,9 +26,14 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 👇 ВОТ ЗДЕСЬ МЫ УКАЗЫВАЕМ ВАШУ ПАПКУ
+          # 👇 Указываем папку с сайтом
           path: './prototype' 
+          # 👇 Явно задаем имя артефакта
+          name: github-pages
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # 👇 Указываем то же самое имя для развертывания
+          artifact_name: github-pages
