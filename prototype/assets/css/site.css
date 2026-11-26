@@ -761,6 +761,27 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
   line-height: 1.3;
   margin-top: 6px;
 }
+
+/* Шапка карточки: текст этапа слева, его иконка справа */
+.route-detail__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-5);
+}
+.route-detail__head-text { min-width: 0; }
+.route-detail__icon {
+  flex: none;
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-sm);
+  background: var(--c-milk);
+  color: var(--c-green-800);
+}
+.route-detail__icon svg,
+.route-detail__icon img { width: 28px; height: 28px; }
+.route-detail__icon img { object-fit: contain; }
 .route-detail__list { display: grid; gap: 8px; }
 .route-detail__list li {
   display: flex;

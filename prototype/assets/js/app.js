@@ -627,10 +627,18 @@
         btn.classList.toggle('is-active', i === index);
         btn.setAttribute('aria-pressed', i === index ? 'true' : 'false');
       });
+      /* Иконка берётся из самого этапа: работает и для <img>, и для data-icon. */
+      var iconBox = steps[index].querySelector('.step__icon');
+      var iconHTML = iconBox ? iconBox.innerHTML : '';
+
       panel.innerHTML =
-        '<div>' +
-          '<p class="route-detail__label">' + esc(step.label) + '</p>' +
-          '<h3 class="route-detail__title">' + esc(step.detailTitle) + '</h3>' +
+        '<div class="route-detail__head">' +
+          '<div class="route-detail__head-text">' +
+            '<p class="route-detail__label">' + esc(step.label) + '</p>' +
+            '<h3 class="route-detail__title">' + esc(step.detailTitle) + '</h3>' +
+          '</div>' +
+          (iconHTML.trim() ?
+            '<span class="route-detail__icon" aria-hidden="true">' + iconHTML + '</span>' : '') +
         '</div>' +
         '<ul class="route-detail__list">' +
           step.bullets.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('') +
