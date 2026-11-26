@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Демонстрационное изображение: светлая гостиная">
+  <rect width="800" height="600" fill="#f1ece2"/>
+  <rect y="410" width="800" height="190" fill="#ded5c5"/>
+  <rect x="470" y="60" width="280" height="330" fill="#f8f6f1" stroke="#173b36" stroke-opacity="0.22" stroke-width="2"/>
+  <path d="M470 225h280M610 60v330" stroke="#173b36" stroke-opacity="0.18" stroke-width="2"/>
+  <path d="M470 390h280l-150 120H360z" fill="#ffffff" opacity="0.45"/>
+  <rect x="90" y="300" width="300" height="110" rx="14" fill="#c9bfad"/>
+  <rect x="110" y="268" width="130" height="52" rx="10" fill="#d7cebe"/>
+  <rect x="252" y="268" width="130" height="52" rx="10" fill="#d7cebe"/>
+  <rect x="80" y="410" width="330" height="20" rx="8" fill="#b7ab97"/>
+  <rect x="132" y="306" width="62" height="64" rx="9" fill="#c68a68" opacity="0.75"/>
+  <ellipse cx="300" cy="480" rx="110" ry="24" fill="#f2ede3" stroke="#173b36" stroke-opacity="0.14" stroke-width="2"/>
+  <g stroke="#173b36" stroke-opacity="0.45" stroke-width="2.5" fill="none" stroke-linecap="round">
+    <path d="M690 470c-4-56 6-88 26-112"/>
+    <path d="M690 430c-26-18-38-44-36-68 22 6 36 28 36 68z" fill="#173b36" fill-opacity="0.12"/>
+    <path d="M696 400c20-28 42-38 62-38-6 26-28 42-62 38z" fill="#173b36" fill-opacity="0.12"/>
+  </g>
+  <path d="M664 470h54l-8 66h-38z" fill="#c68a68" opacity="0.85"/>
+  <text x="600" y="574" font-family="Manrope, Segoe UI, sans-serif" font-size="12" letter-spacing="1.8" fill="#173b36" fill-opacity="0.4">ДЕМО</text>
+</svg>

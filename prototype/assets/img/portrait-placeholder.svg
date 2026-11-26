@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600" role="img" aria-labelledby="t d">
+  <title id="t">Место для фотографии Ксении Хазиевой</title>
+  <desc id="d">Заглушка вместо реального портрета. Изображение не является фотографией специалиста.</desc>
+  <rect width="480" height="600" fill="#e9e4d9"/>
+  <circle cx="240" cy="232" r="86" fill="#173b36" opacity="0.14"/>
+  <path d="M96 600c0-104 64-176 144-176s144 72 144 176z" fill="#173b36" opacity="0.14"/>
+  <g stroke="#173b36" stroke-opacity="0.35" stroke-width="2" fill="none">
+    <circle cx="240" cy="232" r="86"/>
+    <path d="M96 600c0-104 64-176 144-176s144 72 144 176"/>
+  </g>
+  <rect x="1" y="1" width="478" height="598" fill="none" stroke="#173b36" stroke-opacity="0.14" stroke-width="2"/>
+</svg>

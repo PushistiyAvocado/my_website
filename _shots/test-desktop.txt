@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="utf-8">
+<title>ИТОГО: 22 PASS, 0 FAIL</title>
+<style>
+  body { font: 13px/1.5 monospace; margin: 0; }
+  #out { white-space: pre-wrap; padding: 8px; }
+  iframe { width: 1200px; height: 900px; border: 0; }
+</style>
+</head>
+<body>
+<pre id="out">ИТОГО: 22 PASS, 0 FAIL
+PASS :: index: при загрузке 6 карточек → 6
+PASS :: index: фильтр "цена до" отсекает дорогие объекты → 6200000,3400000
+PASS :: index: счётчик результатов обновился → Найдено 2 объекта
+PASS :: index: HZ_reset возвращает 6 карточек → 6
+PASS :: index: сердечко ставит aria-pressed=true → true
+PASS :: index: показывается уведомление об избранном → Объект добавлен в избранное (сохраняется в этом браузере)
+PASS :: index: повторный клик снимает избранное → false
+PASS :: index: диалог открывается по кнопке → 1 открытых dialog
+PASS :: index: диалог закрывается кнопкой → 0
+PASS :: index: переключение шага маршрута обновляет панель → Шаг 02 · Переговоры
+PASS :: index: на десктопе бургер скрыт → none
+PASS :: catalog: 6 карточек на первой странице → 6
+PASS :: catalog: счётчик 9 объектов → Найдено 9 объектов · страница 1 из 2
+PASS :: catalog: сортировка "сначала дешёвые" → 3400000,6200000,7300000,9850000,11200000,11500000
+PASS :: catalog: вторая страница — 3 карточки → 3
+PASS :: catalog: счётчик показывает страницу 2 → Найдено 9 объектов · страница 2 из 2
+PASS :: catalog: быстрый выбор типа выставляет фильтр → house / true
+PASS :: catalog: появляется чип активного фильтра → Дом, коттедж×
+PASS :: catalog: снятие чипа возвращает все 9 объектов → Найдено 9 объектов · страница 1 из 2
+PASS :: catalog: кнопка подписана количеством объектов → Показать 9 объектов
+PASS :: catalog: применение фильтров показывает уведомление → Фильтры применены к демонстрационной подборке
+PASS :: catalog: на десктопе панель фильтров статична и открыта → data-static=true, open=true</pre>
+<iframe id="idx" src="../prototype/index.html" title="index"></iframe>
+<iframe id="cat" src="../prototype/catalog.html" title="catalog"></iframe>
+<script>
+var log = [];
+
+function add(pass, name, extra) {
+  log.push((pass ? 'PASS' : 'FAIL') + ' :: ' + name + (extra === undefined ? '' : ' → ' + extra));
+}
+function docOf(id) { return document.getElementById(id).contentDocument; }
+function q(d, s) { return d.querySelector(s); }
+function qa(d, s) { return Array.prototype.slice.call(d.querySelectorAll(s)); }
+function fire(d, el, type) {
+  el.dispatchEvent(new d.defaultView.Event(type, { bubbles: true }));
+}
+function key(d, name) {
+  d.dispatchEvent(new d.defaultView.KeyboardEvent('keydown', { key: name, bubbles: true }));
+}
+function cards(d, grid) { return qa(d, '#' + grid + ' .listing'); }
+function prices(d, grid) {
+  return cards(d, grid).map(function (c) {
+    return Number(q(c, '.listing__price').textContent.replace(/\D/g, ''));
+  });
+}
+function isAscending(list) {
+  for (var i = 1; i < list.length; i++) { if (list[i] < list[i - 1]) return false; }
+  return true;
+}
+function text(el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
+function toastVisible(d) {
+  var t = q(d, '#toast');
+  return !!t && t.classList.contains('is-visible') && text(t).length > 0;
+}
+
+function runIndex() {
+  var d = docOf('idx');
+  if (!d) { add(false, 'index: iframe доступен из теста'); return; }
+  var w = d.defaultView;
+
+  add(cards(d, 'listings-grid').length === 6, 'index: при загрузке 6 карточек', cards(d, 'listings-grid').length);
+
+  /* Фильтр по максимальной цене через change на поле поиска */
+  var maxInput = q(d, '#s-price-max');
+  if (maxInput) {
+    maxInput.value = '7000000';
+    fire(d, maxInput, 'change');
+    var p = prices(d, 'listings-grid');
+    add(p.length > 0 && p.every(function (v) { return v <= 7000000; }),
+      'index: фильтр "цена до" отсекает дорогие объекты', p.join(','));
+    add(/Найдено\s*\d+/.test(text(q(d, '#search-result'))),
+      'index: счётчик результатов обновился', text(q(d, '#search-result')));
+  } else {
+    add(false, 'index: поле "цена до" найдено');
+  }
+
+  /* Сброс фильтров */
+  if (typeof w.HZ_reset === 'function') {
+    w.HZ_reset();
+    add(cards(d, 'listings-grid').length === 6, 'index: HZ_reset возвращает 6 карточек', cards(d, 'listings-grid').length);
+  } else {
+    add(false, 'index: window.HZ_reset определён');
+  }
+
+  /* Избранное */
+  var fav = q(d, '.listing .listing__fav');
+  if (fav) {
+    fav.click();
+    add(fav.getAttribute('aria-pressed') === 'true', 'index: сердечко ставит aria-pressed=true', fav.getAttribute('aria-pressed'));
+    add(toastVisible(d), 'index: показывается уведомление об избранном', text(q(d, '#toast')));
+    fav.click();
+    add(fav.getAttribute('aria-pressed') === 'false', 'index: повторный клик снимает избранное', fav.getAttribute('aria-pressed'));
+  } else {
+    add(false, 'index: кнопка избранного найдена');
+  }
+
+  /* Диалог заявки */
+  var opener = q(d, '[data-open-dialog]');
+  if (opener) {
+    opener.click();
+    var opened = qa(d, 'dialog[open]');
+    add(opened.length === 1, 'index: диалог открывается по кнопке', opened.length + ' открытых dialog');
+    var closer = opened[0] && q(opened[0], '[data-close-dialog]');
+    if (closer) {
+      closer.click();
+      add(qa(d, 'dialog[open]').length === 0, 'index: диалог закрывается кнопкой', qa(d, 'dialog[open]').length);
+    } else {
+      add(false, 'index: в диалоге есть кнопка закрытия');
+    }
+  } else {
+    add(false, 'index: открыватель диалога найден');
+  }
+
+  /* Маршрут сделки */
+  var steps = qa(d, '.step[data-step]');
+  var panel = q(d, '#route-detail');
+  if (steps.length > 1 && panel) {
+    var before = text(panel);
+    steps[1].click();
+    add(text(panel) !== before && steps[1].classList.contains('is-active'),
+      'index: переключение шага маршрута обновляет панель', text(q(panel, '.route-detail__label')));
+  } else {
+    add(false, 'index: шаги маршрута и панель найдены');
+  }
+
+  /* На десктопе бургер скрыт */
+  var burger = q(d, '.burger');
+  add(!!burger && w.getComputedStyle(burger).display === 'none',
+    'index: на десктопе бургер скрыт', burger ? w.getComputedStyle(burger).display : 'нет .burger');
+}
+
+function runCatalog() {
+  var d = docOf('cat');
+  if (!d) { add(false, 'catalog: iframe доступен из теста'); return; }
+
+  add(cards(d, 'catalog-grid').length === 6, 'catalog: 6 карточек на первой странице', cards(d, 'catalog-grid').length);
+  add(/Найдено 9 объектов/.test(text(q(d, '#catalog-count'))), 'catalog: счётчик 9 объектов', text(q(d, '#catalog-count')));
+
+  /* Сортировка по возрастанию цены */
+  var sort = q(d, '#catalog-sort');
+  if (sort) {
+    sort.value = 'cheap';
+    fire(d, sort, 'change');
+    add(isAscending(prices(d, 'catalog-grid')), 'catalog: сортировка "сначала дешёвые"', prices(d, 'catalog-grid').join(','));
+    sort.value = 'new';
+    fire(d, sort, 'change');
+  } else {
+    add(false, 'catalog: селект сортировки найден');
+  }
+
+  /* Пагинация */
+  var pager = q(d, '#catalog-pagination');
+  var page2 = pager && q(pager, '.pagination__btn[data-page="2"]');
+  if (page2) {
+    page2.click();
+    add(cards(d, 'catalog-grid').length === 3, 'catalog: вторая страница — 3 карточки', cards(d, 'catalog-grid').length);
+    add(/страница 2 из 2/.test(text(q(d, '#catalog-count'))), 'catalog: счётчик показывает страницу 2', text(q(d, '#catalog-count')));
+  } else {
+    add(false, 'catalog: кнопка второй страницы найдена');
+  }
+
+  /* Быстрый выбор типа объекта */
+  var quick = q(d, '[data-quick-type="house"]');
+  var typeSel = q(d, '#f-type');
+  if (quick && typeSel) {
+    quick.click();
+    add(typeSel.value === 'house' && quick.getAttribute('aria-pressed') === 'true',
+      'catalog: быстрый выбор типа выставляет фильтр', typeSel.value + ' / ' + quick.getAttribute('aria-pressed'));
+    var chipsEl = q(d, '#active-filters');
+    add(!!chipsEl && !chipsEl.hidden && chipsEl.querySelectorAll('.active-filter').length > 0,
+      'catalog: появляется чип активного фильтра', text(chipsEl));
+  } else {
+    add(false, 'catalog: чип быстрого выбора и селект типа найдены');
+  }
+
+  /* Снятие чипа */
+  var clearBtn = q(d, '#active-filters [data-clear="type"]');
+  if (clearBtn) {
+    clearBtn.click();
+    add(/Найдено 9 объектов/.test(text(q(d, '#catalog-count'))) && q(d, '#f-type').value === '',
+      'catalog: снятие чипа возвращает все 9 объектов', text(q(d, '#catalog-count')));
+  } else {
+    add(false, 'catalog: крестик чипа найден');
+  }
+
+  /* Кнопка применения фильтров и статичная панель на десктопе */
+  var submit = q(d, '#filters-submit');
+  if (submit) {
+    add(/Показать 9 объектов/.test(text(submit)), 'catalog: кнопка подписана количеством объектов', text(submit));
+    submit.click();
+    add(toastVisible(d), 'catalog: применение фильтров показывает уведомление', text(q(d, '#toast')));
+    var dlg = q(d, '#filters');
+    add(!!dlg && dlg.hasAttribute('data-static') && dlg.hasAttribute('open'),
+      'catalog: на десктопе панель фильтров статична и открыта',
+      dlg ? ('data-static=' + dlg.hasAttribute('data-static') + ', open=' + dlg.hasAttribute('open')) : 'нет #filters');
+  } else {
+    add(false, 'catalog: кнопка применения фильтров найдена');
+  }
+}
+
+function finish() {
+  var passed = log.filter(function (l) { return l.indexOf('PASS') === 0; }).length;
+  var failed = log.length - passed;
+  var head = 'ИТОГО: ' + passed + ' PASS, ' + failed + ' FAIL';
+  document.getElementById('out').textContent = [head].concat(log).join('\n');
+  document.title = head;
+}
+
+window.addEventListener('load', function () {
+  setTimeout(function () {
+    try { runIndex(); } catch (e) { add(false, 'index: исключение', e.message); }
+    try { runCatalog(); } catch (e) { add(false, 'catalog: исключение', e.message); }
+    finish();
+  }, 700);
+});
+</script>
+
+
+</body></html>

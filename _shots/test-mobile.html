@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>pending</title>
+<style>
+  body { font: 13px/1.5 monospace; margin: 0; }
+  #out { white-space: pre-wrap; padding: 8px; }
+  iframe { width: 390px; height: 780px; border: 0; }
+</style>
+</head>
+<body>
+<pre id="out">pending</pre>
+<iframe id="idx" src="../prototype/index.html" title="index"></iframe>
+<iframe id="cat" src="../prototype/catalog.html" title="catalog"></iframe>
+<script>
+var log = [];
+
+function add(pass, name, extra) {
+  log.push((pass ? 'PASS' : 'FAIL') + ' :: ' + name + (extra === undefined ? '' : ' → ' + extra));
+}
+function docOf(id) { return document.getElementById(id).contentDocument; }
+function q(d, s) { return d.querySelector(s); }
+function qa(d, s) { return Array.prototype.slice.call(d.querySelectorAll(s)); }
+function text(el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
+function key(d, name) {
+  d.dispatchEvent(new d.defaultView.KeyboardEvent('keydown', { key: name, bubbles: true }));
+}
+function toastVisible(d) {
+  var t = q(d, '#toast');
+  return !!t && t.classList.contains('is-visible') && text(t).length > 0;
+}
+function wide(d) { return d.defaultView.innerWidth; }
+
+function runIndexMobile() {
+  var d = docOf('idx');
+  if (!d) { add(false, 'моб. index: iframe доступен из теста'); return; }
+  var w = d.defaultView;
+
+  add(wide(d) === 390, 'моб. index: ширина окна 390', wide(d));
+
+  var burger = q(d, '.burger');
+  add(!!burger && w.getComputedStyle(burger).display !== 'none',
+    'моб. index: бургер виден', burger ? w.getComputedStyle(burger).display : 'нет .burger');
+
+  var nav = q(d, '.nav');
+  add(!!nav && w.getComputedStyle(nav).display === 'none',
+    'моб. index: навигация в хедере скрыта', nav ? w.getComputedStyle(nav).display : 'нет .nav');
+
+  var opener = q(d, '[data-open-menu]');
+  var drawer = q(d, '#mobile-menu');
+  if (opener && drawer) {
+    opener.click();
+    add(drawer.classList.contains('is-open') && !drawer.hasAttribute('hidden') &&
+        d.body.classList.contains('is-locked') && opener.getAttribute('aria-expanded') === 'true',
+      'моб. index: кнопка открывает меню и блокирует скролл',
+      'open=' + drawer.classList.contains('is-open') + ', locked=' + d.body.classList.contains('is-locked'));
+    key(d, 'Escape');
+    add(!drawer.classList.contains('is-open') && drawer.hasAttribute('hidden') &&
+        !d.body.classList.contains('is-locked') && opener.getAttribute('aria-expanded') === 'false',
+      'моб. index: Escape закрывает меню', 'open=' + drawer.classList.contains('is-open'));
+
+    opener.click();
+    var innerClose = q(drawer, '[data-close-menu]');
+    if (innerClose) {
+      innerClose.click();
+      add(!drawer.classList.contains('is-open'), 'моб. index: крестик в меню закрывает его', drawer.className);
+    } else {
+      add(false, 'моб. index: крестик внутри меню найден');
+    }
+  } else {
+    add(false, 'моб. index: кнопка меню и панель найдены');
+  }
+
+  var form = q(d, '#search-form');
+  add(!!form, 'моб. index: форма поиска найдена');
+  if (form) {
+    var submit = q(form, '[type="submit"]');
+    if (submit) {
+      submit.click();
+      add(toastVisible(d), 'моб. index: отправка поиска показывает уведомление', text(q(d, '#toast')));
+    } else {
+      add(false, 'моб. index: кнопка поиска найдена');
+    }
+  }
+}
+
+function runCatalogMobile() {
+  var d = docOf('cat');
+  if (!d) { add(false, 'моб. catalog: iframe доступен из теста'); return; }
+  var w = d.defaultView;
+
+  var dlg = q(d, '#filters');
+  if (!dlg) { add(false, 'моб. catalog: панель фильтров найдена'); return; }
+
+  add(!dlg.hasAttribute('open') && !dlg.hasAttribute('data-static'),
+    'моб. catalog: при загрузке панель фильтров закрыта',
+    'open=' + dlg.hasAttribute('open') + ', data-static=' + dlg.hasAttribute('data-static'));
+
+  var opener = q(d, '[data-open-filters]');
+  if (opener) {
+    opener.click();
+    add(dlg.open === true, 'моб. catalog: кнопка "Фильтры" открывает нижний лист', dlg.open);
+    var closer = q(dlg, '[data-close-filters]');
+    if (closer) {
+      closer.click();
+      add(dlg.open === false, 'моб. catalog: кнопка закрытия скрывает лист', dlg.open);
+    } else {
+      add(false, 'моб. catalog: кнопка закрытия листа найдена');
+    }
+  } else {
+    add(false, 'моб. catalog: кнопка "Фильтры" найдена');
+  }
+
+  /* Применение фильтра из листа: этаж от 5 */
+  var floorMin = q(d, '#f-floor-min');
+  var before = text(q(d, '#catalog-count'));
+  if (opener && floorMin) {
+    opener.click();
+    floorMin.value = '5';
+    floorMin.dispatchEvent(new d.defaultView.Event('change', { bubbles: true }));
+    var after = text(q(d, '#catalog-count'));
+    add(after !== before && !/Найдено 9 /.test(after), 'моб. catalog: фильтр этажа меняет выдачу', before + ' → ' + after);
+    var submit = q(d, '#filters-submit');
+    if (submit) {
+      submit.click();
+      add(dlg.open === false && toastVisible(d),
+        'моб. catalog: кнопка в листе применяет фильтры и закрывает его',
+        'open=' + dlg.open + ', toast=' + text(q(d, '#toast')));
+    } else {
+      add(false, 'моб. catalog: кнопка применения найдена');
+    }
+  } else {
+    add(false, 'моб. catalog: поле "этаж от" найдено');
+  }
+
+  /* Карточки отрисованы, сетка — grid */
+  var firstCard = q(d, '#catalog-grid .listing');
+  var gridEl = q(d, '#catalog-grid');
+  add(!!firstCard, 'моб. catalog: карточки отрисованы',
+    firstCard ? firstCard.getBoundingClientRect().width.toFixed(0) : '0');
+  add(!!gridEl && w.getComputedStyle(gridEl).display === 'grid',
+    'моб. catalog: сетка карточек — grid', gridEl ? w.getComputedStyle(gridEl).display : 'нет сетки');
+}
+
+function finish() {
+  var passed = log.filter(function (l) { return l.indexOf('PASS') === 0; }).length;
+  var failed = log.length - passed;
+  var head = 'ИТОГО: ' + passed + ' PASS, ' + failed + ' FAIL';
+  document.getElementById('out').textContent = [head].concat(log).join('\n');
+  document.title = head;
+}
+
+window.addEventListener('load', function () {
+  setTimeout(function () {
+    try { runIndexMobile(); } catch (e) { add(false, 'моб. index: исключение', e.message); }
+    try { runCatalogMobile(); } catch (e) { add(false, 'моб. catalog: исключение', e.message); }
+    finish();
+  }, 700);
+});
+</script>
+</body>
+</html>

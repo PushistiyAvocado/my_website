@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ксения Хазиева — специалист по недвижимости в Екатеринбурге | Прототип</title>
+  <meta name="description" content="Демонстрационный прототип персонального сайта специалиста по недвижимости: подбор объектов, проверка документов, сопровождение сделки от поиска до передачи ключей.">
+  <meta name="theme-color" content="#173B36">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <div class="proto-bar">
+    Демонстрационный прототип · <strong>не рабочая версия сайта</strong> · объекты, отзывы и контакты приведены для примера
+  </div>
+
+  <header class="site-header" data-header>
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Ксения Хазиева — на главную">
+        <span class="brand__mark" aria-hidden="true">КХ</span>
+        <span>
+          <span class="brand__name">Ксения Хазиева</span>
+          <span class="brand__role">Специалист по недвижимости</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Основная навигация">
+        <a class="nav__link" href="catalog.html">Купить</a>
+        <a class="nav__link" href="#sell">Продать</a>
+        <a class="nav__link" href="#route">Сопровождение</a>
+        <a class="nav__link" href="#blog">Блог</a>
+        <a class="nav__link" href="#about">Обо мне</a>
+        <a class="nav__link" href="#contacts">Контакты</a>
+      </nav>
+
+      <div class="header__actions">
+        <button class="btn btn--sm" type="button" data-open-dialog="dialog-consult">Связаться</button>
+        <button class="icon-btn burger" type="button" data-open-menu aria-expanded="false"
+                aria-controls="mobile-menu" aria-label="Открыть меню">
+          <span class="burger__lines" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero__grid">
+          <div class="hero__content">
+            <p class="kicker">Екатеринбург · Берёзовский · Верхняя Пышма</p>
+            <h1 class="display hero__title" id="hero-title">
+              От поиска недвижимости <span>до получения <em>ключей</em></span>
+            </h1>
+            <p class="lead hero__lead">
+              Помогаю пройти весь путь сделки: подбираю недвижимость, проверяю документы, 
+              сопровождаю оформление и остаюсь рядом до передачи ключей.
+            </p>
+
+            <div class="hero__actions">
+              <a class="btn btn--lg" href="catalog.html">Смотреть объекты</a>
+              <button class="btn btn--outline btn--lg" type="button" data-open-dialog="dialog-consult">
+                Обсудить задачу
+              </button>
+            </div>
+
+            <ul class="hero__facts">
+              <li class="hero__fact">Работа по договору</li>
+              <li class="hero__fact">Проверка документов до аванса</li>
+              <li class="hero__fact">Сопровождение на всех этапах</li>
+            </ul>
+          </div>
+
+          <div class="hero__media">
+            <figure class="figure">
+              <div class="figure__frame">
+                <img src="assets/img/had_interior.jpg" width="900" height="700"
+                     alt="Светлая гостиная с панорамным окном">
+              </div>
+            </figure>
+
+            <figure class="hero__portrait">
+              <img src="assets/img/mini_photo_person.jpg" width="320" height="400"
+                   alt="Портрет Ксения Хазиева">
+              <figcaption>Ксения Хазиева<br>специалист по недвижимости</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section section--tight section--hairline" aria-labelledby="search-title">
+      <div class="container">
+        <form class="search-panel" id="search-form" aria-describedby="search-hint">
+          <div class="search-panel__head">
+            <h2 class="search-panel__title" id="search-title">Подобрать объект</h2>
+            <p class="tiny" id="search-hint">Фильтр работает по демонстрационному набору из 9 объектов</p>
+          </div>
+
+          <div class="search-panel__grid">
+            <div class="field">
+              <label class="field__label" for="s-type">Тип объекта</label>
+              <select class="field__control" id="s-type" name="type">
+                <option value="">Любой</option>
+                <option value="apartment">Квартира</option>
+                <option value="house">Дом, коттедж</option>
+                <option value="land">Земельный участок</option>
+                <option value="commercial">Коммерческая</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="s-city">Город</label>
+              <select class="field__control" id="s-city" name="city">
+                <option value="">Любой</option>
+                <option value="ekb">Екатеринбург</option>
+                <option value="berez">Берёзовский</option>
+                <option value="vpyshma">Верхняя Пышма</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="s-district">Район</label>
+              <select class="field__control" id="s-district" name="district">
+                <option value="">Любой район</option>
+                <option value="Академический">Академический</option>
+                <option value="Ботанический">Ботанический</option>
+                <option value="ВИЗ">ВИЗ</option>
+                <option value="Октябрьский">Октябрьский</option>
+                <option value="Чкаловский">Чкаловский</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="s-rooms">Комнат</label>
+              <select class="field__control" id="s-rooms" name="rooms">
+                <option value="">Неважно</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4+">4 и больше</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="s-price-min">Цена от, ₽</label>
+              <input class="field__control" id="s-price-min" name="price-min" type="text"
+                     inputmode="numeric" placeholder="например, 6 000 000" autocomplete="off">
+              <p class="field__hint">Можно вводить без пробелов</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="s-price-max">Цена до, ₽</label>
+              <input class="field__control" id="s-price-max" name="price-max" type="text"
+                     inputmode="numeric" placeholder="например, 14 000 000" autocomplete="off">
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="s-area-min">Площадь от, м²</label>
+              <input class="field__control" id="s-area-min" name="area-min" type="text"
+                     inputmode="numeric" placeholder="например, 50" autocomplete="off">
+              <p class="field__hint">Для участков не применяется</p>
+            </div>
+          </div>
+
+          <div class="search-panel__foot">
+            <p class="search-panel__result" id="search-result" role="status" aria-live="polite">
+              Подбираем объекты по демонстрационной базе
+            </p>
+            <button class="btn" type="submit">Показать объекты</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="actual" aria-labelledby="actual-title">
+      <div class="container">
+        <div class="section__head">
+          <div class="stack-10">
+            <p class="kicker">Подборка</p>
+            <h2 class="h2" id="actual-title">Актуальные предложения</h2>
+          </div>
+          <div class="head-aside stack-10">
+            <p class="small muted">
+              Демонстрационные объекты с условными адресами и ценами.
+              В рабочей версии здесь будут только проверенные предложения.
+            </p>
+            <a class="text-link" href="catalog.html">Весь каталог</a>
+          </div>
+        </div>
+
+        <div class="grid grid--3" id="listings-grid"></div>
+
+        <noscript>
+          <p class="small muted" style="margin-top: 24px;">
+            Для просмотра демонстрационных карточек нужен JavaScript: они собираются из локального файла данных.
+          </p>
+        </noscript>
+      </div>
+    </section>
+
+    <section class="section section--surface" id="route" aria-labelledby="route-title">
+      <div class="container">
+        <div class="section__head">
+          <div class="stack-10">
+            <p class="kicker">Маршрут сделки</p>
+            <h2 class="h2" id="route-title">Четыре этапа — от проверки до ключей</h2>
+          </div>
+          <div class="head-aside stack-10">
+            <p class="small muted">
+              Нажмите на этап, чтобы увидеть, что в него входит.
+              Состав этапов обсуждается под вашу ситуацию.
+            </p>
+          </div>
+        </div>
+
+        <div class="route" role="group" aria-label="Этапы сделки">
+          <button class="step" type="button" data-step="0" aria-pressed="false">
+            <span class="step__num">01</span>
+            <span class="step__icon"> <img src="assets/img/house-svgrepo-com.svg" alt="" width="40" height="40"></span>
+            <span class="step__title">Проверка объекта и документов</span>
+            <span class="step__text">Закрываем вопрос «с чем именно мы имеем дело» до внесения аванса.</span>
+          </button>
+
+          <button class="step" type="button" data-step="1" aria-pressed="false">
+            <span class="step__num">02</span>
+            <span class="step__icon"> <img src="assets/img/demostration-horn-svgrepo-com.svg" alt="" width="40" height="40"></span>
+            <span class="step__title">Переговоры и согласование условий</span>
+            <span class="step__text">Договариваемся о цене, сроках, порядке расчётов и передаче объекта.</span>
+          </button>
+
+          <button class="step" type="button" data-step="2" aria-pressed="false">
+            <span class="step__num">03</span>
+            <span class="step__icon" data-icon="contract"></span>
+            <span class="step__title">Подготовка и оформление сделки</span>
+            <span class="step__text">Собираем комплект документов и проверяем формулировки договора.</span>
+          </button>
+
+          <button class="step" type="button" data-step="3" aria-pressed="false">
+            <span class="step__num">04</span>
+            <span class="step__icon" data-icon="keys"></span>
+            <span class="step__title">Регистрация и передача ключей</span>
+            <span class="step__text">Доводим сделку до результата и сопровождаем приём-передачу объекта.</span>
+          </button>
+        </div>
+
+        <div class="route-detail" id="route-detail" role="region" aria-live="polite" aria-label="Подробности выбранного этапа"></div>
+
+        <p class="tiny" style="margin-top: 16px;">
+          Описание этапов носит информационный характер и не заменяет юридическую консультацию
+          по конкретной ситуации.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="sell" aria-labelledby="sell-title">
+      <div class="container">
+        <div class="tg-wrap">
+          <div class="stack-16">
+            <p class="kicker">Продавцам</p>
+            <h2 class="h2" id="sell-title">Продать квартиру без лишних кругов</h2>
+            <p class="lead">
+              Начинаем с разбора ситуации: что за объект, какие документы уже есть,
+              какие сроки и какую цену вы считаете справедливой. Дальше — план и работа по нему.
+            </p>
+
+            <ul class="fact-list">
+              <li>
+                <span class="fact-list__key">Шаг 1</span>
+                <span class="fact-list__val">Разбор объекта и подготовка к показу</span>
+              </li>
+              <li>
+                <span class="fact-list__key">Шаг 2</span>
+                <span class="fact-list__val">Показы и обратная связь по реальному спросу</span>
+              </li>
+              <li>
+                <span class="fact-list__key">Шаг 3</span>
+                <span class="fact-list__val">Проверка покупателя и сопровождение расчётов</span>
+              </li>
+            </ul>
+          </div>
+
+          <form class="search-panel" data-demo-form aria-labelledby="sell-form-title">
+            <div class="search-panel__head">
+              <h3 class="search-panel__title" id="sell-form-title">Оставить заявку на консультацию</h3>
+              <span class="tag tag--demo">демо</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label class="field__label" for="sell-type">Тип объекта</label>
+                <select class="field__control" id="sell-type" name="sell-type">
+                  <option value="apartment">Квартира</option>
+                  <option value="house">Дом, коттедж</option>
+                  <option value="land">Земельный участок</option>
+                  <option value="commercial">Коммерческая</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="sell-place">Город или район</label>
+                <input class="field__control" id="sell-place" name="sell-place" type="text"
+                       placeholder="например, Екатеринбург, ВИЗ" autocomplete="off">
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="sell-name">Как к вам обращаться</label>
+                <input class="field__control" id="sell-name" name="sell-name" type="text"
+                       minlength="2" required placeholder="Имя" autocomplete="given-name">
+                <p class="field__error" hidden></p>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="sell-phone">Телефон</label>
+                <input class="field__control" id="sell-phone" name="sell-phone" type="tel"
+                       required placeholder="+7 (___) ___-__-__" autocomplete="tel">
+                <p class="field__error" hidden></p>
+              </div>
+
+              <div class="field field--full">
+                <label class="field__label" for="sell-comment">Комментарий</label>
+                <textarea class="field__control" id="sell-comment" name="sell-comment"
+                          placeholder="Что важно учесть: сроки, ипотека, доля, документы"></textarea>
+              </div>
+
+              <div class="field field--full">
+                <label class="checkbox">
+                  <input type="checkbox" name="consent" required>
+                  <span>Согласен(-на) на обработку персональных данных. В рабочей версии здесь появится ссылка на политику обработки.</span>
+                </label>
+                <p class="field__error" hidden></p>
+              </div>
+
+              <div class="field field--full">
+                <div class="form-result" data-form-result hidden></div>
+                <button class="btn btn--block" type="submit">Отправить заявку</button>
+                <p class="field__hint">
+                  Форма демонстрационная: данные не отправляются и не сохраняются на сервере.
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface section--hairline" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about">
+          <div class="about__media">
+            <figure class="figure figure--inset">
+              <div class="figure__frame">
+                <img src="assets/img/main_photo_person.jpg" width="480" height="600"
+                     alt="Портрет Ксении Хазиевой, специалиста по недвижимости">
+              </div>
+              <figcaption class="figure__caption">Ксения Хазиева</figcaption>
+            </figure>
+            <span class="about__stamp" aria-hidden="true">Работа<br>по договору</span>
+          </div>
+
+          <div class="about__body">
+            <p class="kicker">Обо мне</p>
+            <h2 class="h2 about__name" id="about-title">Ксения Хазиева</h2>
+            <p class="about__role">Специалист по недвижимости · Екатеринбург и область</p>
+
+            <div class="about__text body-text">
+              <p>
+                Помогаю покупателям и продавцам проходить сделки спокойно: без спешки,
+                без давления и без «мы потом разберёмся». Сначала — понять задачу и ограничения,
+                потом — выбрать объект и проверить документы.
+              </p>
+              <p>
+                Мне важно, чтобы человек понимал каждый следующий шаг: что подписывает,
+                за что платит и что будет дальше. Поэтому все договорённости фиксируем
+                письменно, а вопросы разбираем до сделки, а не после.
+              </p>
+            </div>
+
+            <ul class="fact-list">
+              <li>
+                <span class="fact-list__key">География</span>
+                <span class="fact-list__val">Екатеринбург, Берёзовский, Верхняя Пышма</span>
+              </li>
+              <li>
+                <span class="fact-list__key">Формат работы</span>
+                <span class="fact-list__val">Личные встречи и онлайн-сопровождение</span>
+              </li>
+              <li>
+                <span class="fact-list__key">С чем помогаю</span>
+                <span class="fact-list__val">Покупка, продажа, проверка документов, сделка</span>
+              </li>
+              <li>
+                <span class="fact-list__key">Принцип</span>
+                <span class="fact-list__val">Честно говорить о рисках, даже если сделка «хорошая»</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="reviews-title">
+      <div class="container">
+        <div class="section__head">
+          <div class="stack-10">
+            <p class="kicker">Отзывы</p>
+            <h2 class="h2" id="reviews-title">Что говорят клиенты</h2>
+          </div>
+          <div class="head-aside stack-10">
+            <p class="small muted">
+              Раздел подготовлен под реальные отзывы. Сейчас здесь только места под них —
+              придуманных историй на сайте не будет.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid--3">
+          <article class="review review--placeholder">
+            <span class="review__mark" aria-hidden="true">«</span>
+            <p class="review__text">
+              Место для отзыва о подборе квартиры: что было важно клиенту,
+              сколько объектов посмотрели и чем закончилась история.
+            </p>
+            <div class="review__meta">
+              <span class="review__avatar" aria-hidden="true">—</span>
+              <div>
+                <p class="review__who">Отзыв будет добавлен</p>
+                <p class="review__src">Источник: по согласованию с клиентом</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="review review--placeholder">
+            <span class="review__mark" aria-hidden="true">«</span>
+            <p class="review__text">
+              Место для отзыва о продаже: подготовка объекта, показы,
+              переговоры по цене и сроки выхода на сделку.
+            </p>
+            <div class="review__meta">
+              <span class="review__avatar" aria-hidden="true">—</span>
+              <div>
+                <p class="review__who">Отзыв будет добавлен</p>
+                <p class="review__src">Источник: по согласованию с клиентом</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="review review--placeholder">
+            <span class="review__mark" aria-hidden="true">«</span>
+            <p class="review__text">
+              Место для отзыва о сопровождении сделки: проверка документов,
+              расчёты и передача ключей.
+            </p>
+            <div class="review__meta">
+              <span class="review__avatar" aria-hidden="true">—</span>
+              <div>
+                <p class="review__who">Отзыв будет добавлен</p>
+                <p class="review__src">Источник: по согласованию с клиентом</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <p class="review-note">
+          <span data-icon="info"></span>
+          <span>
+            Как только появятся реальные отзывы, здесь будут текст, имя клиента и ссылка
+            на источник. Пока раздел остаётся заготовкой — это честнее, чем выдуманные истории.
+          </span>
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--hairline" id="blog" aria-labelledby="blog-title">
+      <div class="container">
+        <div class="section__head">
+          <div class="stack-10">
+            <p class="kicker">Блог</p>
+            <h2 class="h2" id="blog-title">Разборы, которые помогают решать</h2>
+          </div>
+          <div class="head-aside stack-10">
+            <p class="small muted">
+              Планируемые темы. Тексты ещё не написаны — карточки показывают,
+              как будет устроен раздел.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid--3">
+          <article class="post-card">
+            <div class="post-card__cover">
+              <img src="assets/img/listing-living.svg" width="800" height="600" loading="lazy"
+                   alt="Демонстрационная иллюстрация гостиной — обложка будущей статьи">
+            </div>
+            <div class="post-card__body">
+              <p class="post-card__cat">Проверка документов</p>
+              <h3 class="post-card__title">Что проверить в документах на квартиру до аванса</h3>
+              <p class="post-card__text">
+                Выписка ЕГРН, история переходов права, долги и обременения:
+                разбор по шагам, без юридического тумана.
+              </p>
+              <p class="post-card__meta">
+                <span>Разбор · 7 минут чтения</span>
+                <span class="tag">скоро</span>
+              </p>
+            </div>
+          </article>
+
+          <article class="post-card">
+            <div class="post-card__cover">
+              <img src="assets/img/listing-kitchen.svg" width="800" height="600" loading="lazy"
+                   alt="Демонстрационная иллюстрация кухни — обложка будущей статьи">
+            </div>
+            <div class="post-card__body">
+              <p class="post-card__cat">Покупка</p>
+              <h3 class="post-card__title">Как выбрать район, если работа в центре, а бюджет ограничен</h3>
+              <p class="post-card__text">
+                Транспорт, инфраструктура, перспективы застройки и то,
+                как эти факторы отражаются на цене через несколько лет.
+              </p>
+              <p class="post-card__meta">
+                <span>Гид · 9 минут чтения</span>
+                <span class="tag">скоро</span>
+              </p>
+            </div>
+          </article>
+
+          <article class="post-card">
+            <div class="post-card__cover">
+              <img src="assets/img/listing-house.svg" width="800" height="600" loading="lazy"
+                   alt="Демонстрационная иллюстрация загородного дома — обложка будущей статьи">
+            </div>
+            <div class="post-card__body">
+              <p class="post-card__cat">Загородная недвижимость</p>
+              <h3 class="post-card__title">Дом за городом: на что смотреть, кроме самого дома</h3>
+              <p class="post-card__text">
+                Подъездные пути, коммуникации, границы участка и документы на землю —
+                то, что часто выясняется слишком поздно.
+              </p>
+              <p class="post-card__meta">
+                <span>Разбор · 8 минут чтения</span>
+                <span class="tag">скоро</span>
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface" aria-labelledby="tg-title">
+      <div class="container">
+        <div class="tg-wrap">
+          <div class="stack-16">
+            <p class="kicker">Телеграм</p>
+            <h2 class="h2" id="tg-title">Новые объекты и короткие разборы — в канале</h2>
+            <p class="lead">
+              В канале планируются подборки объектов, заметки о проверках документов
+              и ответы на частые вопросы покупателей.
+            </p>
+            <div class="row-16">
+              <button class="btn btn--outline" type="button" data-open-dialog="dialog-consult">
+                <span data-icon="tg"></span>
+                Узнать про Telegram
+              </button>
+              <span class="tag tag--demo">ссылка на канал появится позже</span>
+            </div>
+          </div>
+
+          <div class="tg-post" aria-label="Пример оформления поста в Telegram">
+            <div class="tg-post__head">
+              <span class="tg-post__avatar" aria-hidden="true">КХ</span>
+              <div>
+                <p class="tg-post__channel">Недвижимость с Ксенией</p>
+                <p class="tg-post__time">пример оформления · демо</p>
+              </div>
+            </div>
+            <p class="tg-post__text">
+              Разбираем, как читать выписку ЕГРН: какие разделы важны,
+              что означает «обременение» и когда стоит задавать вопросы продавцу.
+            </p>
+            <div class="tg-post__media">
+              <img src="assets/img/listing-office.svg" width="800" height="500" loading="lazy"
+                   alt="Демонстрационная иллюстрация интерьера — пример изображения к посту">
+            </div>
+            <p class="tg-post__foot">
+              <span>Пример публикации</span>
+              <span>289 просмотров</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contacts" aria-labelledby="contacts-title">
+      <div class="container">
+        <div class="tg-wrap">
+          <div class="stack-16">
+            <p class="kicker">Контакты</p>
+            <h2 class="h2" id="contacts-title">Обсудим вашу задачу</h2>
+            <p class="lead">
+              Позвоните или напишите: коротко разберём ситуацию и решим,
+              нужна ли встреча. Консультация ни к чему не обязывает.
+            </p>
+            <div class="row-16">
+              <button class="btn" type="button" data-open-dialog="dialog-consult">Оставить заявку</button>
+              <a class="btn btn--ghost" href="catalog.html">Смотреть объекты</a>
+            </div>
+            <p class="tiny">
+              Телефон, мессенджеры и ссылка на Telegram-канал появятся здесь после
+              согласования контактных данных. Сейчас в блоке только заглушки.
+            </p>
+          </div>
+
+          <div class="contact-placeholder">
+            <p>
+              <strong>Телефон</strong><br>
+              Будет добавлен после согласования номера
+            </p>
+            <p>
+              <strong>Мессенджеры</strong><br>
+              WhatsApp и Telegram — ссылки появятся позже
+            </p>
+            <p>
+              <strong>Город и район работы</strong><br>
+              Екатеринбург, Берёзовский, Верхняя Пышма
+            </p>
+            <p>
+              <strong>Формат и график</strong><br>
+              Звонок, онлайн-встреча, встреча на объекте — по договорённости
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta on-dark">
+          <div class="cta__inner">
+            <div>
+              <p class="kicker">Начнём</p>
+              <h2 class="h2" id="cta-title">Расскажите, что ищете — предложу варианты</h2>
+              <p class="cta__note">
+                Это прототип: заявка не отправляется на сервер. Форма показывает,
+                как будет работать связь с вами после подключения серверной части.
+              </p>
+            </div>
+            <div class="cta__actions">
+              <button class="btn btn--accent" type="button" data-open-dialog="dialog-consult">
+                Оставить заявку
+              </button>
+              <a class="btn btn--outline" href="catalog.html">Каталог объектов</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="index.html" aria-label="Ксения Хазиева — на главную">
+            <span class="brand__mark" aria-hidden="true">КХ</span>
+            <span>
+              <span class="brand__name">Ксения Хазиева</span>
+              <span class="brand__role">Специалист по недвижимости</span>
+            </span>
+          </a>
+          <p class="footer__tagline">
+            Помогаю пройти путь от поиска недвижимости до получения ключей —
+            спокойно, с проверкой документов и понятными шагами.
+          </p>
+        </div>
+
+        <div>
+          <p class="footer__title">Разделы</p>
+          <ul class="footer__list">
+            <li><a href="catalog.html">Каталог объектов</a></li>
+            <li><a href="#actual">Актуальные предложения</a></li>
+            <li><a href="#route">Маршрут сделки</a></li>
+            <li><a href="#about">Обо мне</a></li>
+            <li><a href="#blog">Блог</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer__title">Направления</p>
+          <ul class="footer__list">
+            <li><a href="catalog.html">Купить квартиру</a></li>
+            <li><a href="catalog.html">Купить дом или участок</a></li>
+            <li><a href="#sell">Продать объект</a></li>
+            <li><a href="#route">Проверка документов</a></li>
+            <li><a href="#route">Сопровождение сделки</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer__title">Контакты</p>
+          <ul class="footer__list">
+            <li><span>Телефон — будет добавлен</span></li>
+            <li><span>Telegram — ссылка появится позже</span></li>
+            <li><span>WhatsApp — ссылка появится позже</span></li>
+            <li><span>Екатеринбург и область</span></li>
+            <li><a href="#contacts">Все контакты</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2026 Ксения Хазиева · демонстрационный прототип</p>
+        <div class="footer__legal">
+          <span>Политика обработки персональных данных — в разработке</span>
+          <span>Объекты и цены на сайте условные</span>
+          <a href="#main">Наверх</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="drawer" id="mobile-menu" hidden>
+    <div class="drawer__head">
+      <a class="brand" href="index.html" aria-label="Ксения Хазиева — на главную">
+        <span class="brand__mark" aria-hidden="true">КХ</span>
+        <span>
+          <span class="brand__name">Ксения Хазиева</span>
+          <span class="brand__role">Специалист по недвижимости</span>
+        </span>
+      </a>
+      <button class="icon-btn" type="button" data-close-menu aria-label="Закрыть меню">
+        <span data-icon="close"></span>
+      </button>
+    </div>
+
+    <nav class="drawer__nav" aria-label="Меню на телефоне">
+      <a class="drawer__link" href="catalog.html">Купить</a>
+      <a class="drawer__link" href="#sell">Продать</a>
+      <a class="drawer__link" href="#route">Сопровождение</a>
+      <a class="drawer__link" href="#blog">Блог</a>
+      <a class="drawer__link" href="#about">Обо мне</a>
+      <a class="drawer__link" href="#contacts">Контакты</a>
+    </nav>
+
+    <div class="drawer__foot">
+      <button class="btn btn--block" type="button" data-open-dialog="dialog-consult">
+        Оставить заявку
+      </button>
+      <p class="drawer__note">Демонстрационный прототип · заявки не отправляются</p>
+    </div>
+  </div>
+
+  <dialog class="dialog" id="dialog-consult" aria-labelledby="dialog-consult-title">
+    <div class="dialog__panel">
+      <div class="dialog__head">
+        <div>
+          <p class="kicker">Заявка</p>
+          <h2 class="h3" id="dialog-consult-title">Связаться с Ксенией</h2>
+        </div>
+        <button class="icon-btn dialog__close" type="button" data-close-dialog aria-label="Закрыть окно">
+          <span data-icon="close"></span>
+        </button>
+      </div>
+
+      <form class="dialog__body" data-demo-form>
+        <div class="field">
+          <label class="field__label" for="dlg-name">Как к вам обращаться</label>
+          <input class="field__control" id="dlg-name" name="name" type="text"
+                 minlength="2" required placeholder="Имя" autocomplete="given-name">
+          <p class="field__error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="dlg-phone">Телефон</label>
+          <input class="field__control" id="dlg-phone" name="phone" type="tel"
+                 required placeholder="+7 (___) ___-__-__" autocomplete="tel">
+          <p class="field__error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="dlg-message">Что вас интересует</label>
+          <textarea class="field__control" id="dlg-message" name="message" style="min-height: 84px;"
+                    placeholder="Например: ищу двухкомнатную квартиру в Академическом до 12 млн"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" name="consent" required>
+            <span>Согласен(-на) на обработку персональных данных. В рабочей версии здесь появится ссылка на политику обработки.</span>
+          </label>
+          <p class="field__error" hidden></p>
+        </div>
+
+        <div class="form-result" data-form-result hidden></div>
+
+        <div class="dialog__foot">
+          <button class="btn" type="submit">Отправить заявку</button>
+          <button class="btn btn--ghost" type="button" data-close-dialog>Отмена</button>
+        </div>
+
+        <p class="tiny">
+          Демонстрационная форма: данные не отправляются и не сохраняются,
+          проверка полей работает только в браузере.
+        </p>
+      </form>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Демонстрационное изображение: земельный участок">
+  <rect width="800" height="420" fill="#eef1e9"/>
+  <rect y="420" width="800" height="180" fill="#d3d9c5"/>
+  <path d="M0 480h800M0 540h800" stroke="#173b36" stroke-opacity="0.1" stroke-width="2"/>
+  <path d="M120 600V300h560v300" fill="#c8d0b8" stroke="#173b36" stroke-opacity="0.18" stroke-width="2"/>
+  <path d="M400 300v300M120 430h560" stroke="#173b36" stroke-opacity="0.14" stroke-width="2" stroke-dasharray="8 8"/>
+  <g stroke="#173b36" stroke-opacity="0.4" stroke-width="2.5" fill="none" stroke-linecap="round">
+    <path d="M230 470v-90"/>
+    <circle cx="230" cy="356" r="42" fill="#173b36" fill-opacity="0.14"/>
+    <path d="M600 500v-110"/>
+    <circle cx="600" cy="366" r="50" fill="#173b36" fill-opacity="0.12"/>
+  </g>
+  <rect x="150" y="120" width="180" height="120" fill="#f4f1e8" stroke="#173b36" stroke-opacity="0.18" stroke-width="2"/>
+  <path d="M170 220h60v-40h-60z" fill="#c68a68" opacity="0.5"/>
+  <text x="600" y="574" font-family="Manrope, Segoe UI, sans-serif" font-size="12" letter-spacing="1.8" fill="#173b36" fill-opacity="0.4">ДЕМО</text>
+</svg>

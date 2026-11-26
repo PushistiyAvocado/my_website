@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Демонстрационное изображение: спальня">
+  <rect width="800" height="600" fill="#f0ebe1"/>
+  <rect y="420" width="800" height="180" fill="#dfd6c6"/>
+  <rect x="80" y="120" width="170" height="200" fill="#f9f7f1" stroke="#173b36" stroke-opacity="0.2" stroke-width="2"/>
+  <path d="M165 120v200M80 220h170" stroke="#173b36" stroke-opacity="0.16" stroke-width="2"/>
+  <rect x="300" y="270" width="420" height="150" rx="12" fill="#cdc3b1"/>
+  <rect x="320" y="200" width="380" height="86" rx="10" fill="#f6f3ec" stroke="#173b36" stroke-opacity="0.14" stroke-width="2"/>
+  <rect x="336" y="214" width="150" height="58" rx="8" fill="#e6e0d3"/>
+  <rect x="500" y="214" width="184" height="58" rx="8" fill="#e6e0d3"/>
+  <rect x="300" y="416" width="420" height="22" rx="8" fill="#b9ad99"/>
+  <rect x="330" y="438" width="16" height="40" fill="#8f826d"/>
+  <rect x="674" y="438" width="16" height="40" fill="#8f826d"/>
+  <rect x="470" y="300" width="80" height="60" rx="8" fill="#c68a68" opacity="0.55"/>
+  <g stroke="#173b36" stroke-opacity="0.4" stroke-width="2.5" fill="none">
+    <path d="M120 420v-90"/>
+    <path d="M92 330h56l-10-46h-36z" fill="#f9f7f1"/>
+  </g>
+  <path d="M80 470h120v-60H80z" fill="#173b36" opacity="0.06"/>
+  <text x="600" y="574" font-family="Manrope, Segoe UI, sans-serif" font-size="12" letter-spacing="1.8" fill="#173b36" fill-opacity="0.4">ДЕМО</text>
+</svg>

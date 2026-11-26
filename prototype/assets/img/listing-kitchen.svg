@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Демонстрационное изображение: светлая кухня">
+  <rect width="800" height="600" fill="#f3efe6"/>
+  <rect x="0" y="360" width="800" height="240" fill="#e2dacb"/>
+  <rect x="60" y="90" width="200" height="150" fill="#f9f7f2" stroke="#173b36" stroke-opacity="0.22" stroke-width="2"/>
+  <path d="M160 90v150M60 165h200" stroke="#173b36" stroke-opacity="0.18" stroke-width="2"/>
+  <rect x="60" y="300" width="470" height="60" rx="6" fill="#eae3d6" stroke="#173b36" stroke-opacity="0.14" stroke-width="2"/>
+  <rect x="60" y="356" width="470" height="120" fill="#173b36" opacity="0.08"/>
+  <path d="M120 360v120M220 360v120M320 360v120M420 360v120" stroke="#173b36" stroke-opacity="0.16" stroke-width="2"/>
+  <circle cx="150" cy="420" r="5" fill="#c68a68"/>
+  <circle cx="250" cy="420" r="5" fill="#c68a68"/>
+  <circle cx="350" cy="420" r="5" fill="#c68a68"/>
+  <rect x="600" y="120" width="150" height="300" rx="6" fill="#e8e1d3" stroke="#173b36" stroke-opacity="0.14" stroke-width="2"/>
+  <path d="M675 120v300" stroke="#173b36" stroke-opacity="0.14" stroke-width="2"/>
+  <circle cx="630" cy="270" r="7" fill="#173b36" opacity="0.25"/>
+  <circle cx="720" cy="270" r="7" fill="#173b36" opacity="0.25"/>
+  <g stroke="#173b36" stroke-opacity="0.4" stroke-width="2.5" fill="none">
+    <path d="M560 300v-70"/>
+    <path d="M535 300h50l-8-60h-34z" fill="#f9f7f2"/>
+  </g>
+  <rect x="270" y="250" width="70" height="34" rx="6" fill="#c68a68" opacity="0.8"/>
+  <text x="600" y="574" font-family="Manrope, Segoe UI, sans-serif" font-size="12" letter-spacing="1.8" fill="#173b36" fill-opacity="0.4">ДЕМО</text>
+</svg>

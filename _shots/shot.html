@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>shot</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  iframe { width: 390px; height: 844px; border: 0; display: block; }
+</style>
+</head>
+<body>
+<iframe id="stage" title="stage"></iframe>
+<script>
+/* Мини-стенд для снятия скриншотов состояний: hash задаёт сценарий.
+   #filters — открыть нижний лист фильтров каталога
+   #dialog  — открыть модальное окно «Связаться» на главной */
+var scenarios = {
+  filters: { src: '../prototype/catalog.html', selector: '[data-open-filters]' },
+  dialog: { src: '../prototype/index.html', selector: '[data-open-dialog]' }
+};
+var key = (location.hash || '#filters').slice(1);
+var scenario = scenarios[key] || scenarios.filters;
+var stage = document.getElementById('stage');
+
+stage.addEventListener('load', function () {
+  var target = stage.contentDocument && stage.contentDocument.querySelector(scenario.selector);
+  if (target) setTimeout(function () { target.click(); }, 300);
+});
+stage.src = scenario.src;
+</script>
+</body>
+</html>

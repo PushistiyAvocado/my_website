@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Каталог объектов — Ксения Хазиева | Демонстрационный прототип</title>
+  <meta name="description" content="Демонстрационный каталог объектов недвижимости в Екатеринбурге и области: фильтры по типу, городу, району, комнатам, цене и площади. Все объекты — примеры.">
+  <meta name="theme-color" content="#173B36">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <div class="proto-bar">
+    Демонстрационный прототип · <strong>не рабочая версия сайта</strong> · все объекты и цены условные
+  </div>
+
+  <header class="site-header" data-header>
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Ксения Хазиева — на главную">
+        <span class="brand__mark" aria-hidden="true">КХ</span>
+        <span>
+          <span class="brand__name">Ксения Хазиева</span>
+          <span class="brand__role">Специалист по недвижимости</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Основная навигация">
+        <a class="nav__link" href="catalog.html" aria-current="page">Купить</a>
+        <a class="nav__link" href="index.html#sell">Продать</a>
+        <a class="nav__link" href="index.html#route">Сопровождение</a>
+        <a class="nav__link" href="index.html#blog">Блог</a>
+        <a class="nav__link" href="index.html#about">Обо мне</a>
+        <a class="nav__link" href="index.html#contacts">Контакты</a>
+      </nav>
+
+      <div class="header__actions">
+        <button class="btn btn--sm" type="button" data-open-dialog="dialog-consult">Связаться</button>
+        <button class="icon-btn burger" type="button" data-open-menu aria-expanded="false"
+                aria-controls="mobile-menu" aria-label="Открыть меню">
+          <span class="burger__lines" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container">
+      <nav aria-label="Хлебные крошки">
+        <ol class="breadcrumbs">
+          <li><a href="index.html">Главная</a></li>
+          <li><span aria-current="page">Каталог объектов</span></li>
+        </ol>
+      </nav>
+
+      <div class="page-head" id="catalog-top">
+        <div class="page-head__grid">
+          <div>
+            <p class="kicker">Каталог</p>
+            <h1 class="h1 page-head__title">Объекты недвижимости</h1>
+            <p class="lead" style="margin-top: 16px;">
+              Демонстрационная подборка: квартиры, дома, участки и коммерческие помещения
+              в Екатеринбурге, Берёзовском и Верхней Пышме.
+            </p>
+          </div>
+
+          <div class="page-head__aside">
+            <p class="tiny">Быстрый выбор типа объекта</p>
+            <div class="city-chips">
+              <button class="chip" type="button" data-quick-type="apartment" aria-pressed="false">Квартиры</button>
+              <button class="chip" type="button" data-quick-type="house" aria-pressed="false">Дома</button>
+              <button class="chip" type="button" data-quick-type="land" aria-pressed="false">Участки</button>
+              <button class="chip" type="button" data-quick-type="commercial" aria-pressed="false">Коммерческая</button>
+            </div>
+            <p class="tiny">
+              Набор ограничен девятью объектами, поэтому часть фильтров может не дать результатов.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="catalog">
+        <dialog class="filters" id="filters" aria-labelledby="filters-title">
+          <div class="filters__head">
+            <p class="filters__title" id="filters-title">Фильтры</p>
+            <div class="row-16" style="gap: 12px;">
+              <button class="filters__reset" type="button" data-reset-filters>Сбросить</button>
+              <button class="icon-btn filters-toggle" type="button" data-close-filters
+                      aria-label="Закрыть фильтры">
+                <span data-icon="close"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="filters__group" role="group" aria-labelledby="f-group-type">
+            <p class="filters__legend" id="f-group-type">Тип объекта</p>
+            <div class="field">
+              <label class="field__label sr-only" for="f-type">Тип объекта</label>
+              <select class="field__control" id="f-type" name="type">
+                <option value="">Любой тип</option>
+                <option value="apartment">Квартира</option>
+                <option value="house">Дом, коттедж</option>
+                <option value="land">Земельный участок</option>
+                <option value="commercial">Коммерческая</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="filters__group" role="group" aria-labelledby="f-group-place">
+            <p class="filters__legend" id="f-group-place">Где искать</p>
+            <div class="field">
+              <label class="field__label" for="f-city">Город</label>
+              <select class="field__control" id="f-city" name="city">
+                <option value="">Любой город</option>
+                <option value="ekb">Екатеринбург</option>
+                <option value="berez">Берёзовский</option>
+                <option value="vpyshma">Верхняя Пышма</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="f-district">Район</label>
+              <select class="field__control" id="f-district" name="district">
+                <option value="">Любой район</option>
+                <option value="Академический">Академический</option>
+                <option value="Ботанический">Ботанический</option>
+                <option value="ВИЗ">ВИЗ</option>
+                <option value="Октябрьский">Октябрьский</option>
+                <option value="Чкаловский">Чкаловский</option>
+              </select>
+              <p class="field__hint">Список районов зависит от выбранного города</p>
+            </div>
+          </div>
+
+          <div class="filters__group" role="group" aria-labelledby="f-group-rooms">
+            <p class="filters__legend" id="f-group-rooms">Комнаты</p>
+            <div class="field">
+              <label class="field__label sr-only" for="f-rooms">Количество комнат</label>
+              <select class="field__control" id="f-rooms" name="rooms">
+                <option value="">Неважно</option>
+                <option value="1">1 комната</option>
+                <option value="2">2 комнаты</option>
+                <option value="3">3 комнаты</option>
+                <option value="4+">4 и больше</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="filters__group" role="group" aria-labelledby="f-group-price">
+            <p class="filters__legend" id="f-group-price">Цена, ₽</p>
+            <div class="filters__row">
+              <div class="field">
+                <label class="field__label" for="f-price-min">От</label>
+                <input class="field__control" id="f-price-min" name="price-min" type="text"
+                       inputmode="numeric" placeholder="5 000 000" autocomplete="off">
+              </div>
+              <div class="field">
+                <label class="field__label" for="f-price-max">До</label>
+                <input class="field__control" id="f-price-max" name="price-max" type="text"
+                       inputmode="numeric" placeholder="20 000 000" autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+          <div class="filters__group" role="group" aria-labelledby="f-group-area">
+            <p class="filters__legend" id="f-group-area">Площадь, м²</p>
+            <div class="filters__row">
+              <div class="field">
+                <label class="field__label" for="f-area-min">От</label>
+                <input class="field__control" id="f-area-min" name="area-min" type="text"
+                       inputmode="numeric" placeholder="40" autocomplete="off">
+              </div>
+              <div class="field">
+                <label class="field__label" for="f-area-max">До</label>
+                <input class="field__control" id="f-area-max" name="area-max" type="text"
+                       inputmode="numeric" placeholder="120" autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+          <div class="filters__group" role="group" aria-labelledby="f-group-extra">
+            <p class="filters__legend" id="f-group-extra">Участок и этаж</p>
+            <div class="filters__row">
+              <div class="field">
+                <label class="field__label" for="f-plot-min">Участок от, сот.</label>
+                <input class="field__control" id="f-plot-min" name="plot-min" type="text"
+                       inputmode="numeric" placeholder="6" autocomplete="off">
+              </div>
+              <div class="field">
+                <label class="field__label" for="f-floor-min">Этаж от</label>
+                <input class="field__control" id="f-floor-min" name="floor-min" type="text"
+                       inputmode="numeric" placeholder="2" autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+          <div class="filters__foot">
+            <button class="btn btn--block" type="button" id="filters-submit">Показать объекты</button>
+            <p class="field__hint">
+              Фильтры применяются сразу, к демонстрационному набору из 9 объектов.
+            </p>
+          </div>
+        </dialog>
+
+        <div>
+          <div class="results-bar">
+            <p class="results-bar__count" id="catalog-count" role="status" aria-live="polite">
+              Подбираем объекты по демонстрационной базе
+            </p>
+            <div class="results-bar__tools">
+              <button class="btn btn--ghost btn--sm filters-toggle" type="button" data-open-filters>
+                <span data-icon="sliders"></span>
+                Фильтры
+              </button>
+              <div class="sort">
+                <label for="catalog-sort">Сортировка</label>
+                <select class="field__control" id="catalog-sort">
+                  <option value="new">Сначала новые</option>
+                  <option value="cheap">Сначала дешевле</option>
+                  <option value="expensive">Сначала дороже</option>
+                  <option value="area">По площади</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="active-filters" id="active-filters" hidden></div>
+
+          <noscript>
+            <p class="catalog-note" style="margin-top: 0; margin-bottom: var(--sp-4);">
+              Для фильтров, сортировки, пагинации и избранного нужен JavaScript:
+              без него подборка объектов не отображается. Демонстрационные объекты
+              перечислены в разделе «Актуальные предложения» на главной странице.
+            </p>
+          </noscript>
+
+          <div class="catalog__grid" id="catalog-grid"></div>
+
+          <nav class="pagination" id="catalog-pagination" aria-label="Страницы каталога" hidden></nav>
+
+          <p class="catalog-note">
+            <strong>Все девять объектов — демонстрационные.</strong>
+            Адреса, цены, площади и описания составлены для проверки интерфейса и не являются
+            предложением о продаже. Реальные объекты появятся после согласования с Ксенией;
+            тогда же добавим фотографии и точные характеристики.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="index.html" aria-label="Ксения Хазиева — на главную">
+            <span class="brand__mark" aria-hidden="true">КХ</span>
+            <span>
+              <span class="brand__name">Ксения Хазиева</span>
+              <span class="brand__role">Специалист по недвижимости</span>
+            </span>
+          </a>
+          <p class="footer__tagline">
+            Каталог демонстрационный: он показывает, как будет работать подбор
+            объектов после наполнения реальными предложениями.
+          </p>
+        </div>
+
+        <div>
+          <p class="footer__title">Разделы</p>
+          <ul class="footer__list">
+            <li><a href="catalog.html">Каталог объектов</a></li>
+            <li><a href="index.html#actual">Актуальные предложения</a></li>
+            <li><a href="index.html#route">Маршрут сделки</a></li>
+            <li><a href="index.html#about">Обо мне</a></li>
+            <li><a href="index.html#blog">Блог</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer__title">Направления</p>
+          <ul class="footer__list">
+            <li><a href="catalog.html">Купить квартиру</a></li>
+            <li><a href="catalog.html">Купить дом или участок</a></li>
+            <li><a href="index.html#sell">Продать объект</a></li>
+            <li><a href="index.html#route">Проверка документов</a></li>
+            <li><a href="index.html#route">Сопровождение сделки</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer__title">Контакты</p>
+          <ul class="footer__list">
+            <li><span>Телефон — будет добавлен</span></li>
+            <li><span>Telegram — ссылка появится позже</span></li>
+            <li><span>WhatsApp — ссылка появится позже</span></li>
+            <li><span>Екатеринбург и область</span></li>
+            <li><a href="index.html#contacts">Все контакты</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2026 Ксения Хазиева · демонстрационный прототип</p>
+        <div class="footer__legal">
+          <span>Политика обработки персональных данных — в разработке</span>
+          <span>Объекты и цены на сайте условные</span>
+          <a href="#main">Наверх</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="drawer" id="mobile-menu" hidden>
+    <div class="drawer__head">
+      <a class="brand" href="index.html" aria-label="Ксения Хазиева — на главную">
+        <span class="brand__mark" aria-hidden="true">КХ</span>
+        <span>
+          <span class="brand__name">Ксения Хазиева</span>
+          <span class="brand__role">Специалист по недвижимости</span>
+        </span>
+      </a>
+      <button class="icon-btn" type="button" data-close-menu aria-label="Закрыть меню">
+        <span data-icon="close"></span>
+      </button>
+    </div>
+
+    <nav class="drawer__nav" aria-label="Меню на телефоне">
+      <a class="drawer__link" href="catalog.html" aria-current="page">Купить</a>
+      <a class="drawer__link" href="index.html#sell">Продать</a>
+      <a class="drawer__link" href="index.html#route">Сопровождение</a>
+      <a class="drawer__link" href="index.html#blog">Блог</a>
+      <a class="drawer__link" href="index.html#about">Обо мне</a>
+      <a class="drawer__link" href="index.html#contacts">Контакты</a>
+    </nav>
+
+    <div class="drawer__foot">
+      <button class="btn btn--block" type="button" data-open-dialog="dialog-consult">
+        Оставить заявку
+      </button>
+      <p class="drawer__note">Демонстрационный прототип · заявки не отправляются</p>
+    </div>
+  </div>
+
+  <dialog class="dialog" id="dialog-consult" aria-labelledby="catalog-dialog-title">
+    <div class="dialog__panel">
+      <div class="dialog__head">
+        <div>
+          <p class="kicker">Заявка</p>
+          <h2 class="h3" id="catalog-dialog-title">Помочь с подбором?</h2>
+        </div>
+        <button class="icon-btn dialog__close" type="button" data-close-dialog aria-label="Закрыть окно">
+          <span data-icon="close"></span>
+        </button>
+      </div>
+
+      <form class="dialog__body" data-demo-form>
+        <div class="field">
+          <label class="field__label" for="c-name">Как к вам обращаться</label>
+          <input class="field__control" id="c-name" name="name" type="text"
+                 minlength="2" required placeholder="Имя" autocomplete="given-name">
+          <p class="field__error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="c-phone">Телефон</label>
+          <input class="field__control" id="c-phone" name="phone" type="tel"
+                 required placeholder="+7 (___) ___-__-__" autocomplete="tel">
+          <p class="field__error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="c-message">Запрос по объекту</label>
+          <textarea class="field__control" id="c-message" name="message" style="min-height: 84px;"
+                    placeholder="Например: расскажите подробнее про объект L-104"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" name="consent" required>
+            <span>Согласен(-на) на обработку персональных данных. В рабочей версии здесь появится ссылка на политику обработки.</span>
+          </label>
+          <p class="field__error" hidden></p>
+        </div>
+
+        <div class="form-result" data-form-result hidden></div>
+
+        <div class="dialog__foot">
+          <button class="btn" type="submit">Отправить заявку</button>
+          <button class="btn btn--ghost" type="button" data-close-dialog>Отмена</button>
+        </div>
+
+        <p class="tiny">
+          Демонстрационная форма: данные не отправляются и не сохраняются,
+          проверка полей работает только в браузере.
+        </p>
+      </form>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>

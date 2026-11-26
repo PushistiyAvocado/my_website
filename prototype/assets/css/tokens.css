@@ -1,0 +1,139 @@
+/* =============================================================================
+   ДИЗАЙН-ТОКЕНЫ — персональный сайт Ксении Хазиевой
+   Единственный источник значений для цвета, типографики, ритма, радиусов,
+   теней и движения. Компоненты (site.css) не содержат «магических» значений.
+   ========================================================================== */
+:root {
+  /* ---------- Палитра: бренд ---------- */
+  --c-green-900: #0f2a26;
+  --c-green-800: #173b36;      /* навигация, заголовки, основные кнопки */
+  --c-green-700: #1e4a43;
+  --c-green-600: #2c5f56;      /* hover на тёмном */
+  --c-milk: #f5f2ec;           /* основной фон */
+  --c-white: #ffffff;
+  --c-surface: #fbfaf7;        /* альтернативная поверхность */
+  --c-terracotta: #c68a68;     /* акцент-графика, крупные цифры, маркеры */
+  --c-terracotta-ink: #a05a38; /* акцентный ТЕКСТ (AA 4.5:1) */
+  --c-terracotta-soft: #f0e2d8;/* подложка акцента */
+  --c-graphite: #242927;       /* основной текст */
+
+  /* ---------- Текст ---------- */
+  --c-text: var(--c-graphite);
+  --c-text-muted: #5c6360;
+  --c-text-soft: #7c837f;
+  --c-text-on-dark: #f2efe9;
+  --c-text-on-dark-muted: rgba(242, 239, 233, 0.72);
+
+  /* ---------- Линии и служебные ---------- */
+  --c-line: #e9e8e3;
+  --c-line-strong: #d7d5cc;
+  --c-success: #2f6b52;
+  --c-success-soft: #e4efe9;
+  --c-warning: #8a6516;
+  --c-warning-soft: #f6edd9;
+  --c-danger: #a4322b;
+  --c-danger-soft: #f6e3e0;
+  --c-info-soft: #e8eeec;
+
+  /* ---------- Прозрачные слои ---------- */
+  --c-green-a08: rgba(23, 59, 54, 0.08);
+  --c-green-a14: rgba(23, 59, 54, 0.14);
+  --c-green-a60: rgba(23, 59, 54, 0.6);
+  --overlay: rgba(15, 42, 38, 0.55);
+  --overlay-soft: rgba(15, 42, 38, 0.28);
+
+  /* ---------- Типографика ---------- */
+  --font-display: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-text: "Golos Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --fs-display: clamp(36px, 5.2vw, 66px);
+  --fs-h1: clamp(32px, 3.8vw, 52px);
+  --fs-h2: clamp(26px, 3.1vw, 42px);
+  --fs-h3: clamp(19px, 1.9vw, 25px);
+  --fs-h4: clamp(17px, 1.3vw, 19px);
+  --fs-lead: clamp(17px, 1.25vw, 20px);
+  --fs-body: 17px;
+  --fs-sm: 15px;
+  --fs-xs: 13px;
+  --fs-kicker: 12.5px;
+
+  --lh-tight: 1.06;
+  --lh-heading: 1.16;
+  --lh-snug: 1.35;
+  --lh-body: 1.65;
+
+  --ls-display: -0.03em;
+  --ls-heading: -0.02em;
+  --ls-kicker: 0.14em;
+  --ls-brand: 0.08em;
+
+  /* ---------- Ритм (шаг 4px) ---------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  --section-y: clamp(64px, 7.5vw, 120px);
+  --gap-grid: clamp(16px, 2vw, 24px);
+  --container-max: 1240px;
+  --container-pad: clamp(20px, 5vw, 40px);
+  --measure: 62ch;
+
+  /* ---------- Радиусы ---------- */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 10px;
+  --r-lg: 18px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* ---------- Тени ---------- */
+  --shadow-float: 0 24px 64px -36px rgba(23, 59, 54, 0.35);
+  --shadow-card: 0 2px 0 0 var(--c-line);
+  --shadow-dialog: 0 40px 120px -48px rgba(15, 42, 38, 0.55);
+
+  /* ---------- Движение ---------- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 420ms;
+
+  /* ---------- Слои ---------- */
+  --z-header: 100;
+  --z-drawer: 200;
+  --z-dialog: 300;
+  --z-toast: 400;
+
+  /* ---------- Служебное ---------- */
+  --tap: 44px;
+  --focus-ring: 0 0 0 2px var(--c-milk), 0 0 0 4px var(--c-terracotta-ink);
+  --header-h: 72px;
+}
+
+/* Тёмная «зелёная» поверхность: локальное переопределение токенов,
+   чтобы компоненты внутри автоматически получали верные цвета. */
+.on-dark {
+  --c-text: var(--c-text-on-dark);
+  --c-text-muted: var(--c-text-on-dark-muted);
+  --c-text-soft: rgba(242, 239, 233, 0.55);
+  --c-line: rgba(242, 239, 233, 0.16);
+  --c-line-strong: rgba(242, 239, 233, 0.28);
+  --c-white: #173b36;
+  --c-surface: #123230;
+  --c-terracotta-ink: #e0a986;
+  color: var(--c-text-on-dark);
+}
+
+@media (max-width: 860px) {
+  :root {
+    --header-h: 64px;
+  }
+}

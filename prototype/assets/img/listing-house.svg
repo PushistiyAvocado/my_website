@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Демонстрационное изображение: загородный дом с участком">
+  <rect width="800" height="600" fill="#eef1e9"/>
+  <rect y="440" width="800" height="160" fill="#d9ddcd"/>
+  <path d="M120 440h560l-70 160H190z" fill="#cfd5c1"/>
+  <rect x="210" y="250" width="380" height="190" fill="#f4f1e8" stroke="#173b36" stroke-opacity="0.24" stroke-width="2"/>
+  <path d="M180 252 400 96l220 156z" fill="#173b36" opacity="0.78"/>
+  <rect x="330" y="330" width="70" height="110" fill="#173b36" opacity="0.22"/>
+  <rect x="240" y="300" width="64" height="64" fill="#c68a68" opacity="0.5"/>
+  <rect x="430" y="300" width="64" height="64" fill="#c68a68" opacity="0.5"/>
+  <rect x="510" y="300" width="52" height="64" fill="#173b36" opacity="0.14"/>
+  <path d="M120 440h560" stroke="#173b36" stroke-opacity="0.2" stroke-width="2"/>
+  <g stroke="#173b36" stroke-opacity="0.45" stroke-width="2.5" fill="none" stroke-linecap="round">
+    <path d="M690 440v-70"/>
+    <circle cx="690" cy="340" r="34" fill="#173b36" fill-opacity="0.12"/>
+    <path d="M140 440v-96"/>
+    <circle cx="140" cy="316" r="30" fill="#173b36" fill-opacity="0.12"/>
+  </g>
+  <rect x="620" y="368" width="120" height="72" fill="#f4f1e8" stroke="#173b36" stroke-opacity="0.2" stroke-width="2"/>
+  <path d="M620 368l60-44 60 44z" fill="#173b36" opacity="0.6"/>
+  <text x="600" y="574" font-family="Manrope, Segoe UI, sans-serif" font-size="12" letter-spacing="1.8" fill="#173b36" fill-opacity="0.4">ДЕМО</text>
+</svg>

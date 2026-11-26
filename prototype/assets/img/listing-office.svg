@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Демонстрационное изображение: помещение под коммерческое использование">
+  <rect width="800" height="600" fill="#f1eee6"/>
+  <rect y="400" width="800" height="200" fill="#e0d9ca"/>
+  <rect x="70" y="70" width="660" height="250" fill="#f9f7f2" stroke="#173b36" stroke-opacity="0.2" stroke-width="2"/>
+  <path d="M290 70v250M510 70v250" stroke="#173b36" stroke-opacity="0.14" stroke-width="2"/>
+  <g fill="#173b36" opacity="0.1">
+    <rect x="100" y="300" width="150" height="20"/>
+    <rect x="320" y="290" width="150" height="30"/>
+    <rect x="540" y="305" width="150" height="15"/>
+  </g>
+  <rect x="120" y="380" width="240" height="20" rx="6" fill="#b7ab97"/>
+  <rect x="150" y="400" width="16" height="60" fill="#8f826d"/>
+  <rect x="314" y="400" width="16" height="60" fill="#8f826d"/>
+  <rect x="170" y="352" width="60" height="30" rx="4" fill="#173b36" opacity="0.2"/>
+  <rect x="250" y="352" width="60" height="30" rx="4" fill="#173b36" opacity="0.2"/>
+  <rect x="470" y="330" width="180" height="110" rx="6" fill="#eae3d5" stroke="#173b36" stroke-opacity="0.16" stroke-width="2"/>
+  <path d="M470 386h180" stroke="#173b36" stroke-opacity="0.16" stroke-width="2"/>
+  <circle cx="560" cy="358" r="6" fill="#c68a68"/>
+  <path d="M520 440v40M600 440v40" stroke="#8f826d" stroke-width="6" stroke-linecap="round"/>
+  <text x="600" y="574" font-family="Manrope, Segoe UI, sans-serif" font-size="12" letter-spacing="1.8" fill="#173b36" fill-opacity="0.4">ДЕМО</text>
+</svg>
