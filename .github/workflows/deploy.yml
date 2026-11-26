@@ -26,8 +26,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 👇 ЗАМЕНИТЕ ЭТО НА ИМЯ ВАШЕЙ ПАПКИ
-          path: './' 
+          # 👇 ВОТ ЗДЕСЬ МЫ УКАЗЫВАЕМ ВАШУ ПАПКУ
+          path: './prototype' 
 
       - name: Deploy to GitHub Pages
         id: deployment
