@@ -1,0 +1,21 @@
+== index.html : nesting errors = 0
+   duplicate ids: none
+   missing required ids: none
+   data-header=1 | data-open-menu=1 | data-close-menu=1 | data-fav=0 | data-quick-type=0 | data-open-filters=0 | data-close-filters=0 | data-reset-filters=0 | data-demo-form=2 | data-form-result=2 | data-icon=8 | data-open-dialog=6 | data-close-dialog=2 | data-step=4 | data-close=3 | data-clear=0 | data-page=0
+== catalog.html : nesting errors = 0
+   duplicate ids: none
+   missing required ids: none
+   data-header=1 | data-open-menu=1 | data-close-menu=1 | data-fav=0 | data-quick-type=4 | data-open-filters=1 | data-close-filters=1 | data-reset-filters=1 | data-demo-form=1 | data-form-result=1 | data-icon=4 | data-open-dialog=2 | data-close-dialog=2 | data-step=0 | data-close=4 | data-clear=0 | data-page=0
+== app.js refers to 32 ids
+== index.html : ids from app.js missing on page = active-filters, catalog-count, catalog-grid, catalog-pagination, catalog-sort, catalog-top, f-area-max, f-area-min, f-city, f-district, f-floor-min, filters, filters-submit, f-plot-min, f-price-max, f-price-min, f-rooms, f-type
+   anchors without target = none
+   dialog[open] count = 0 (expected 0)
+== catalog.html : ids from app.js missing on page = actual, listings-grid, route-detail, s-area-min, s-city, s-district, search-form, search-result, s-price-max, s-price-min, s-rooms, s-type
+   anchors without target = none
+   dialog[open] count = 0 (expected 0)
+== ids used in app.js but absent on BOTH pages = none
+== data.js : braces 22/22, parens 3/3, brackets 11/11 OK
+== icons.js : braces 4/4, parens 8/8, brackets 4/4 OK
+== app.js : braces 7/7, parens 22/22, brackets 5/5 OK
+== site.css: "-clamp(" count = 0 (expected 0)
+== site.css: braces 406/406
