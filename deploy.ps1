@@ -26,11 +26,8 @@ $ErrorActionPreference = 'Continue'
 $source = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 # Черновики и служебные каталоги, которые не должны попадать в репозиторий.
-$excludeFiles = @(
-  '_d*.txt', '_g*.txt', '_s*.txt', '_cmp*.txt', '_info.txt', '_live.txt', '_msg*.txt',
-  '_diff.txt', '_q.txt', '_v.txt', '_h.txt', '_m.txt', '_r.txt', '_final.txt', '_js.txt',
-  '_dom.html'
-)
+# Отчёт статических проверок _check.txt — исключение, он копируется отдельно ниже.
+$excludeFiles = @('_*.txt', '_dom.html')
 $excludeDirs = @('.git', '_tmpc*', 'node_modules', '.vscode')
 
 if (-not (Test-Path (Join-Path $Destination '.git'))) {
@@ -56,9 +53,15 @@ if ($roboCode -ge 8) {
   exit $roboCode
 }
 
+# Отчёт статических проверок в репозитории нужен, поэтому копируем его отдельно.
+$checkReport = Join-Path $source '_check.txt'
+if (Test-Path $checkReport) {
+  Copy-Item $checkReport (Join-Path $Destination '_check.txt') -Force
+}
+
 Push-Location $Destination
 try {
-  & git add -A 2>&1 | Out-Host
+  & git add -A 2>&1 | Out-Null
 
   & git diff --cached --quiet 2>&1 | Out-Host
   if ($LASTEXITCODE -eq 0) {
@@ -86,7 +89,7 @@ try {
     exit $commitCode
   }
 
-  & git push origin main 2>&1 | Out-Host
+  & git push origin main 2>&1 | ForEach-Object { Write-Host ("  " + $_) -ForegroundColor DarkGray }
   if ($LASTEXITCODE -ne 0) {
     Write-Host 'git push завершился с ошибкой (нет доступа к GitHub?).' -ForegroundColor Red
     exit $LASTEXITCODE
