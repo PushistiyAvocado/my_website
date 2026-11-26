@@ -618,11 +618,17 @@
   function initRoute() {
     var steps = $$('.step[data-step]');
     var panel = $('#route-detail');
+    var wrap = $('.route-wrap');
+    var prevBtn = $('[data-step-prev]');
+    var nextBtn = $('[data-step-next]');
     if (!steps.length || !panel || !DATA.routeSteps.length) return;
+
+    var current = 0;
 
     function select(index) {
       var step = DATA.routeSteps[index];
       if (!step) return;
+      current = index;
       steps.forEach(function (btn, i) {
         btn.classList.toggle('is-active', i === index);
         btn.setAttribute('aria-pressed', i === index ? 'true' : 'false');
@@ -645,9 +651,28 @@
         '</ul>';
     }
 
+    /* Листание по кругу: с 04 «вперёд» возвращает к 01 и наоборот */
+    function shift(delta) {
+      select((current + delta + steps.length) % steps.length);
+    }
+
     steps.forEach(function (btn, i) {
       btn.addEventListener('click', function () { select(i); });
     });
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { shift(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { shift(1); });
+
+    /* Клавиши ← → работают, когда фокус внутри блока с этапами */
+    if (wrap) {
+      wrap.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { shift(1); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft') { shift(-1); e.preventDefault(); }
+        else if (e.key === 'Home') { select(0); e.preventDefault(); }
+        else if (e.key === 'End') { select(steps.length - 1); e.preventDefault(); }
+      });
+    }
+
     select(0);
   }
 
