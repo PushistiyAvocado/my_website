@@ -772,16 +772,21 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 .route-detail__head-text { min-width: 0; }
 .route-detail__icon {
   flex: none;
-  width: 100px; height: 100px;
-  display: grid; place-items: center;
+  width: 100px; /* Размер самой рамки */
+  height: 100px; 
+  display: grid; 
+  place-items: center;
   border: 1px solid var(--c-line-strong);
   border-radius: var(--r-sm);
   background: var(--c-milk);
   color: var(--c-green-800);
 }
 .route-detail__icon svg,
-.route-detail__icon img { width: 100px; height: 100px; }
-.route-detail__icon img { object-fit: contain; }
+.route-detail__icon img { 
+  width: 70px !important; /* Чуть меньше рамки, чтобы был отступ. !important заставит браузер применить это */
+  height: 70px !important; 
+  object-fit: contain; 
+}
 .route-detail__list { display: grid; gap: 8px; }
 .route-detail__list li {
   display: flex;
