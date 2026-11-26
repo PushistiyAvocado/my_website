@@ -18,4 +18,4 @@
 == icons.js : braces 4/4, parens 8/8, brackets 4/4 OK
 == app.js : braces 7/7, parens 22/22, brackets 14/14 OK
 == site.css: "-clamp(" count = 0 (expected 0)
-== site.css: braces 419/419
+== site.css: braces 421/421

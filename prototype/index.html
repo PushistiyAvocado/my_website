@@ -251,28 +251,28 @@
           </button>
         </div>
 
-        <div class="route-detail" id="route-detail" role="region" aria-label="Подробности выбранного этапа">
-          <!-- Шапка карточки: строка «Шаг 03 · Оформление», иконка этапа и стрелки листания -->
-          <div class="route-detail__head">
-            <div class="route-detail__head-text" aria-live="polite">
-              <p class="route-detail__label" id="route-detail-label"></p>
-              <h3 class="route-detail__title" id="route-detail-title"></h3>
-            </div>
-            <div class="route-detail__actions">
-              <span class="route-detail__icon" id="route-detail-icon" aria-hidden="true" hidden></span>
-              <div class="route-detail__nav" role="group" aria-label="Листание этапов">
-                <button class="route__arrow" type="button" data-step-prev aria-controls="route-detail"
-                        aria-label="Предыдущий этап">
-                  <span data-icon="chevron-left" aria-hidden="true"></span>
-                </button>
-                <button class="route__arrow" type="button" data-step-next aria-controls="route-detail"
-                        aria-label="Следующий этап">
-                  <span data-icon="chevron-right" aria-hidden="true"></span>
-                </button>
+        <!-- Стрелки листания стоят по бокам карточки этапа -->
+        <div class="route-shell">
+          <button class="route__arrow route__arrow--prev" type="button" data-step-prev
+                  aria-controls="route-detail" aria-label="Предыдущий этап">
+            <span data-icon="chevron-left" aria-hidden="true"></span>
+          </button>
+
+          <div class="route-detail" id="route-detail" role="region" aria-label="Подробности выбранного этапа">
+            <div class="route-detail__head">
+              <div class="route-detail__head-text" aria-live="polite">
+                <p class="route-detail__label" id="route-detail-label"></p>
+                <h3 class="route-detail__title" id="route-detail-title"></h3>
               </div>
+              <span class="route-detail__icon" id="route-detail-icon" aria-hidden="true" hidden></span>
             </div>
+            <ul class="route-detail__list" id="route-detail-list" aria-live="polite"></ul>
           </div>
-          <ul class="route-detail__list" id="route-detail-list" aria-live="polite"></ul>
+
+          <button class="route__arrow route__arrow--next" type="button" data-step-next
+                  aria-controls="route-detail" aria-label="Следующий этап">
+            <span data-icon="chevron-right" aria-hidden="true"></span>
+          </button>
         </div>
 
         <p class="tiny" style="margin-top: 16px;">

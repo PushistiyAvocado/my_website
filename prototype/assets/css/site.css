@@ -733,8 +733,17 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 .step.is-active .step__title { text-decoration: underline; text-decoration-color: var(--c-terracotta); text-underline-offset: 5px; text-decoration-thickness: 1px; }
 .step:focus-visible::before { box-shadow: 0 0 0 3px var(--c-milk), 0 0 0 4px var(--c-terracotta-ink); }
 
-.route-detail {
+/* Оболочка карточки этапа: стрелки листания стоят по бокам от неё */
+.route-shell {
   margin-top: clamp(24px, 2.6vw, 36px);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "prev detail next";
+  align-items: center;
+  gap: clamp(10px, 1.1vw, 18px);
+}
+.route-detail {
+  grid-area: detail;
   border: 1px solid var(--c-line);
   border-left: 2px solid var(--c-terracotta);
   border-radius: var(--r-sm);
@@ -762,8 +771,7 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
   margin-top: 6px;
 }
 
-/* Шапка карточки: строка «Шаг 03 · Оформление» слева, иконка этапа и
-   стрелки листания справа — всё на одной строке. */
+/* Шапка карточки: строка «Шаг 03 · Оформление» слева, иконка этапа справа */
 .route-detail__head {
   display: flex;
   flex-wrap: wrap;
@@ -772,16 +780,9 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
   gap: var(--sp-3) var(--sp-4);
 }
 .route-detail__head-text { flex: 1 1 180px; min-width: 0; }
-.route-detail__actions {
-  flex: none;
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-}
-.route-detail__nav { display: flex; gap: var(--sp-2); }
 .route-detail__icon {
   flex: none;
+  margin-left: auto;
   width: 52px; height: 52px;
   display: grid; place-items: center;
   border: 1px solid var(--c-line-strong);
@@ -793,7 +794,7 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 .route-detail__icon svg,
 .route-detail__icon img { width: 28px; height: 28px; }
 .route-detail__icon img { object-fit: contain; }
-/* Стрелки «назад / вперёд» */
+/* Стрелки «назад / вперёд» по бокам карточки этапа */
 .route__arrow {
   width: var(--tap);
   height: var(--tap);
@@ -801,14 +802,18 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
   place-items: center;
   border: 1px solid var(--c-line-strong);
   border-radius: 50%;
-  background: var(--c-milk);
+  background: var(--c-white);
   color: var(--c-green-800);
   transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
               transform var(--dur-fast) var(--ease);
 }
+.route__arrow--prev { grid-area: prev; justify-self: start; }
+.route__arrow--next { grid-area: next; justify-self: end; }
 .route__arrow svg { width: 18px; height: 18px; }
 .route__arrow:hover { border-color: var(--c-terracotta); color: var(--c-terracotta-ink); }
 .route__arrow:active { transform: translateY(1px); }
+/* Глобальный :focus-visible ставит радиус 4px — у круглой кнопки возвращаем круг */
+.route__arrow:focus-visible { border-radius: 50%; }
 .route-detail__list { display: grid; gap: 8px; }
 .route-detail__list li {
   display: flex;
@@ -1442,6 +1447,15 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
   .tg-wrap { grid-template-columns: minmax(0, 1fr); }
   .cta__inner { grid-template-columns: minmax(0, 1fr); }
   .cta__actions { justify-content: flex-start; }
+  /* На узких экранах стрелки уходят под карточку: «назад» слева, «вперёд» справа */
+  .route-shell {
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      "detail detail"
+      "prev next";
+    justify-content: space-between;
+    row-gap: 16px;
+  }
   .route-detail { grid-template-columns: minmax(0, 1fr); }
 }
 
@@ -1474,8 +1488,6 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
   .sort select { width: 100%; }
   .hero__portrait { width: 116px; }
   .about__stamp { display: none; }
-  /* На узких экранах иконка этапа уступает место стрелкам листания */
-  .route-detail__icon { display: none; }
 }
 
 @media (max-width: 480px) {

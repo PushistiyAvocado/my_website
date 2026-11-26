@@ -672,9 +672,11 @@
       else if (e.key === 'Home') { select(0); e.preventDefault(); }
       else if (e.key === 'End') { select(steps.length - 1); e.preventDefault(); }
     }
+    /* Клавиши работают, когда фокус на этапе, на карточке или на стрелке по боку */
+    var shell = $('.route-shell') || panel;
     var group = $('.route');
     if (group) group.addEventListener('keydown', onKeydown);
-    panel.addEventListener('keydown', onKeydown);
+    shell.addEventListener('keydown', onKeydown);
 
     select(0);
   }
