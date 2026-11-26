@@ -783,8 +783,8 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 }
 .route-detail__icon svg,
 .route-detail__icon img { 
-  width: 70px !important; /* Чуть меньше рамки, чтобы был отступ. !important заставит браузер применить это */
-  height: 70px !important; 
+  width: 60px !important; /* Чуть меньше рамки, чтобы был отступ. !important заставит браузер применить это */
+  height: 60px !important; 
   object-fit: contain; 
 }
 .route-detail__list { display: grid; gap: 8px; }
