@@ -615,7 +615,7 @@
   }
 
   /* ---------- Маршрут сделки ---------- */
-  /* Стрелки листания живут в шапке карточки этапа, поэтому обновляем только
+  /* Стрелки листания стоят по бокам карточки этапа, поэтому обновляем только
      текстовые узлы: кнопки не пересоздаются и не теряют фокус. */
   function initRoute() {
     var steps = $$('.step[data-step]');
@@ -665,7 +665,7 @@
     if (prevBtn) prevBtn.addEventListener('click', function () { shift(-1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { shift(1); });
 
-    /* Клавиши ← → работают, когда фокус внутри блока этапов или карточки */
+    /* Клавиши ← → Home End работают, когда фокус на этапе, в карточке или на стрелке */
     function onKeydown(e) {
       if (e.key === 'ArrowRight') { shift(1); e.preventDefault(); }
       else if (e.key === 'ArrowLeft') { shift(-1); e.preventDefault(); }
