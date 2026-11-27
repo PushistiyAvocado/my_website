@@ -502,13 +502,14 @@
 
     <section class="section section--surface" id="blog" aria-labelledby="tg-title">
       <div class="container">
-        <div class="tg-wrap">
+        <div class="tg-wrap tg-wrap--start">
           <div class="stack-16">
             <p class="kicker">Блог · Telegram</p>
             <h2 class="h2" id="tg-title">Новые объекты и короткие разборы — в канале</h2>
             <p class="lead">
               Подборки объектов, заметки о проверках документов и ответы на частые вопросы
-              покупателей. Ниже — три последних поста, полная лента — на отдельной странице.
+              покупателей. Ниже — три последних поста: листайте стрелками на карточке.
+              В блоге — пять последних публикаций, весь архив — в самом канале.
             </p>
             <div class="row-16">
               <a class="btn" data-tg-link href="https://t.me/" target="_blank" rel="noopener" hidden>
@@ -524,35 +525,50 @@
           </div>
 
           <div class="tg-col">
-            <div class="tg-feed" data-tg-feed data-tg-limit="3" aria-label="Последние записи Telegram-канала">
-              <!-- Пока канал не подключён (scripts/telegram-channel.txt пуст), видна
-                   карточка-пример. Когда канал появится, app.js заменит её тремя
-                   последними постами из assets/js/telegram-data.js. -->
-              <div class="tg-post" aria-label="Пример оформления поста в Telegram">
-                <div class="tg-post__head">
-                  <span class="tg-post__avatar" aria-hidden="true">КХ</span>
-                  <div>
-                    <p class="tg-post__channel">Недвижимость с Ксенией</p>
-                    <p class="tg-post__time">пример оформления · демо</p>
+            <div class="tg-carousel" data-tg-carousel role="region" aria-roledescription="карусель"
+                 aria-label="Последние записи Telegram-канала">
+              <div class="tg-feed tg-feed--carousel" id="tg-feed-home" data-tg-feed data-tg-limit="3">
+                <!-- Пока канал не подключён (scripts/telegram-channel.txt пуст), видна
+                     карточка-пример. Когда канал появится, app.js заменит её тремя
+                     последними постами из assets/js/telegram-data.js. -->
+                <div class="tg-post" aria-label="Пример оформления поста в Telegram">
+                  <div class="tg-post__head">
+                    <span class="tg-post__avatar" aria-hidden="true">КХ</span>
+                    <div>
+                      <p class="tg-post__channel">Недвижимость с Ксенией</p>
+                      <p class="tg-post__time">пример оформления · демо</p>
+                    </div>
                   </div>
+                  <p class="tg-post__text">
+                    Разбираем, как читать выписку ЕГРН: какие разделы важны,
+                    что означает «обременение» и когда стоит задавать вопросы продавцу.
+                  </p>
+                  <div class="tg-post__media">
+                    <img src="assets/img/listing-office.svg" width="800" height="500" loading="lazy"
+                         alt="Демонстрационная иллюстрация интерьера — пример изображения к посту">
+                  </div>
+                  <p class="tg-post__foot">
+                    <span>Пример публикации</span>
+                    <span>289 просмотров</span>
+                  </p>
                 </div>
-                <p class="tg-post__text">
-                  Разбираем, как читать выписку ЕГРН: какие разделы важны,
-                  что означает «обременение» и когда стоит задавать вопросы продавцу.
-                </p>
-                <div class="tg-post__media">
-                  <img src="assets/img/listing-office.svg" width="800" height="500" loading="lazy"
-                       alt="Демонстрационная иллюстрация интерьера — пример изображения к посту">
-                </div>
-                <p class="tg-post__foot">
-                  <span>Пример публикации</span>
-                  <span>289 просмотров</span>
-                </p>
               </div>
+
+              <!-- Стрелки лежат поверх окна поста; app.js показывает их, только
+                   когда в карусели два и больше постов. -->
+              <button class="tg-carousel__nav tg-carousel__nav--prev" type="button"
+                      data-tg-prev aria-controls="tg-feed-home" aria-label="Предыдущий пост" hidden>
+                <span data-icon="chevron-left" aria-hidden="true"></span>
+              </button>
+              <button class="tg-carousel__nav tg-carousel__nav--next" type="button"
+                      data-tg-next aria-controls="tg-feed-home" aria-label="Следующий пост" hidden>
+                <span data-icon="chevron-right" aria-hidden="true"></span>
+              </button>
+              <p class="sr-only" data-tg-status aria-live="polite"></p>
             </div>
 
-            <!-- Кнопка появляется, только если постов в снимке больше, чем помещается
-                 в ленту: иначе она вела бы на страницу с тем же содержимым. -->
+            <!-- Кнопка появляется при подключённом канале: в блоге — пять последних
+                 постов, остальное — в самом Telegram. -->
             <div class="tg-more" data-tg-more hidden>
               <a class="btn" href="telegram.html">Все новости</a>
               <p class="tiny">Полная лента постов и подборок — в Telegram-канале</p>

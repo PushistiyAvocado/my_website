@@ -1003,6 +1003,9 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 
 /* ---------- Блок «Из Telegram» ---------- */
 .tg-wrap { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(24px, 3.4vw, 56px); align-items: center; }
+/* Главная: текст прижат к верхней границе окна поста — первый ряд идёт
+   чуть ниже линии рамки, а не по центру высокой карточки. */
+.tg-wrap--start { align-items: start; }
 .tg-post {
   background: var(--c-white);
   border: 1px solid var(--c-line);
@@ -1070,6 +1073,73 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 /* .btn и .tag задают display, поэтому атрибут hidden сам по себе их не скрывает. */
 [data-tg-fallback][hidden],
 [data-tg-link][hidden] { display: none !important; }
+
+/* Карусель постов на главной: в окне один пост, стрелки лежат на карточке.
+   Прокрутка нативная (overflow-x + scroll-snap), поэтому свайп на телефоне
+   работает без JS; стрелки и клавиши ← → листают по одному посту. */
+.tg-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  min-width: 0;
+  justify-self: start;
+}
+.tg-feed--carousel {
+  display: flex;
+  flex-direction: row;
+  gap: var(--sp-4);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  /* Вертикальные отступы оставляют место для мягкой тени карточки, которую
+     иначе срезает scrollport; отрицательные поля возвращают прежнюю высоту. */
+  padding-block: 28px 32px;
+  margin-block: -28px -32px;
+}
+.tg-feed--carousel::-webkit-scrollbar { display: none; }
+.tg-feed--carousel .tg-post {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: none;
+  justify-self: stretch;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+/* Короткий пост в высокой карусели: подпись держится у нижнего края окна */
+.tg-feed--carousel .tg-post__foot { margin-top: auto; }
+.tg-carousel__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: var(--tap);
+  height: var(--tap);
+  margin-top: calc(var(--tap) / -2);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--c-line-strong);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--c-green-800);
+  box-shadow: 0 14px 30px -18px rgba(23, 59, 54, 0.65);
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+.tg-carousel__nav--prev { left: 8px; }
+.tg-carousel__nav--next { right: 8px; }
+.tg-carousel__nav svg { width: 18px; height: 18px; }
+.tg-carousel__nav:not(:disabled):hover {
+  border-color: var(--c-terracotta);
+  color: var(--c-terracotta-ink);
+  background: var(--c-white);
+}
+.tg-carousel__nav:not(:disabled):active { transform: translateY(1px); }
+.tg-carousel__nav:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+/* Глобальный :focus-visible ставит радиус 4px — у круглой кнопки возвращаем круг */
+.tg-carousel__nav:focus-visible { border-radius: 50%; }
+.tg-carousel__nav[hidden] { display: none !important; }
 
 /* ---------- Страница «Все посты» (telegram.html) ---------- */
 /* На главной лента — колонка шириной 460px; на отдельной странице тот же
@@ -1617,6 +1687,16 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 @media print {
   .site-header, .site-footer, .proto-bar, .drawer, .dialog, .toast { display: none !important; }
   body { background: #fff; }
+  /* Карусель в печати разворачивается в обычный список постов */
+  .tg-feed--carousel {
+    display: grid;
+    gap: var(--sp-4);
+    overflow: visible;
+    padding-block: 0;
+    margin-block: 0;
+  }
+  .tg-feed--carousel .tg-post { break-inside: avoid; }
+  .tg-carousel__nav { display: none !important; }
 }
 
 

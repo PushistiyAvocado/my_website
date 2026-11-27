@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>Все посты из Telegram — Ксения Хазиева | Прототип</title>
-  <meta name="description" content="Полная лента публикаций Telegram-канала Ксении Хазиевой: подборки объектов, разборы документов и ответы на частые вопросы. Демонстрационный прототип.">
+  <title>Блог: последние посты из Telegram — Ксения Хазиева | Прототип</title>
+  <meta name="description" content="Пять последних публикаций Telegram-канала Ксении Хазиевой: подборки объектов, разборы документов и ответы на частые вопросы. Демонстрационный прототип.">
   <meta name="theme-color" content="#173B36">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,7 +54,7 @@
       <nav aria-label="Хлебные крошки">
         <ol class="breadcrumbs">
           <li><a href="index.html">Главная</a></li>
-          <li><span aria-current="page">Все посты</span></li>
+          <li><span aria-current="page">Блог</span></li>
         </ol>
       </nav>
 
@@ -62,11 +62,11 @@
         <div class="page-head__grid">
           <div>
             <p class="kicker">Блог</p>
-            <h1 class="h1 page-head__title">Все посты — в ленте канала</h1>
+            <h1 class="h1 page-head__title">Пять последних постов — в ленте канала</h1>
             <p class="lead" style="margin-top: 16px;">
-              Здесь собраны все публикации Telegram-канала: подборки объектов,
+              Здесь собраны пять последних публикаций Telegram-канала: подборки объектов,
               заметки о проверках документов и ответы на частые вопросы.
-              Каждая карточка ведёт на исходный пост.
+              Каждая карточка ведёт на исходный пост, а весь архив — в самом канале.
             </p>
           </div>
 
@@ -88,11 +88,12 @@
         </div>
       </div>
 
-      <div class="tg-feed tg-feed--grid" data-tg-feed id="tg-list" aria-label="Все записи Telegram-канала">
+      <div class="tg-feed tg-feed--grid" data-tg-feed data-tg-limit="5" id="tg-list" aria-label="Последние записи Telegram-канала">
         <!-- Пока канал не подключён (scripts/telegram-channel.txt пуст), видна
-             карточка-пример. Когда канал появится, app.js заменит её всеми
-             постами из assets/js/telegram-data.js. Лимита здесь нет: на главной
-             у ленты стоит data-tg-limit="3", на этой странице атрибут не задан. -->
+             карточка-пример. Когда канал появится, app.js заменит её пятью
+             последними постами из assets/js/telegram-data.js. Лимит задан в
+             разметке: на главной у карусели data-tg-limit="3", здесь — "5";
+             сам снимок хранит до 50 записей. -->
         <div class="tg-post" aria-label="Пример оформления поста в Telegram">
           <div class="tg-post__head">
             <span class="tg-post__avatar" aria-hidden="true">КХ</span>
@@ -126,8 +127,9 @@
       <p class="catalog-note">
         <strong>Лента собирается из веб-превью канала</strong> скриптом
         <code>scripts/fetch-telegram.ps1</code> и обновляется по запросу
-        (Actions → «Telegram channel feed»). В карточку попадают текст, первое фото,
-        дата и просмотры; альбомы, видео и опросы пока не поддерживаются.
+        (Actions → «Telegram channel feed»). В блоге показываются 5 последних публикаций
+        снимка: в карточку попадают текст, первое фото, дата и просмотры;
+        альбомы, видео и опросы пока не поддерживаются.
       </p>
     </div>
   </main>

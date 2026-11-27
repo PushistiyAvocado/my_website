@@ -768,33 +768,154 @@
     var posts = cfg.posts ? [].concat(cfg.posts) : [];
     if (!posts.length) return;
 
-    /* Карточка канала есть только на странице «Все посты» */
+    /* Карточка канала есть только в блоге (telegram.html) */
     var profile = $('[data-tg-profile]');
+    var feeds = $$('[data-tg-feed]');
+
+    /* Сколько постов реально видно: самый строгий лимит из разметки.
+       Главная — 3 поста в карусели, блог — 5 последних, снимок хранит до 50. */
+    var pageLimit = 0;
+    feeds.forEach(function (feed) {
+      var l = parseInt(feed.getAttribute('data-tg-limit'), 10);
+      if (l > 0 && (!pageLimit || l < pageLimit)) pageLimit = l;
+    });
+    var visibleCount = pageLimit > 0 ? Math.min(pageLimit, posts.length) : posts.length;
+
     if (profile) {
-      profile.innerHTML = tgProfile(cfg, posts.length);
+      profile.innerHTML = tgProfile(cfg, visibleCount);
       profile.removeAttribute('hidden');
     }
 
     var countEl = $('[data-tg-count]');
     if (countEl) {
-      countEl.innerHTML = 'Всего <strong>' + posts.length + '</strong> ' +
-        plural(posts.length, ['публикация', 'публикации', 'публикаций']);
+      countEl.innerHTML = visibleCount < posts.length
+        ? 'Последние <strong>' + visibleCount + '</strong> из ' + posts.length + ' ' +
+          plural(posts.length, ['публикации', 'публикаций', 'публикаций'])
+        : 'Всего <strong>' + posts.length + '</strong> ' +
+          plural(posts.length, ['публикация', 'публикации', 'публикаций']);
     }
 
-    /* Один компонент на две страницы: главная задаёт data-tg-limit="3",
-       на странице «Все посты» атрибута нет — выводим весь снимок.
+    /* Один компонент на две страницы: главная задаёт data-tg-limit="3" и
+       включает карусель, блог — data-tg-limit="5" и обычную сетку.
        Лимит читается из разметки, поэтому HTML остаётся источником правды. */
-    $$('[data-tg-feed]').forEach(function (feed) {
+    feeds.forEach(function (feed) {
       var limit = parseInt(feed.getAttribute('data-tg-limit'), 10);
       var shown = limit > 0 ? posts.slice(0, limit) : posts;
       feed.innerHTML = shown.map(function (post) { return tgCard(post, cfg); }).join('');
     });
+
+    /* Карусель собирается после отрисовки карточек */
+    initTgCarousel();
 
     /* «Все новости» показываем при подключённом канале: полная лента живёт
        на отдельной странице, поэтому кнопка нужна даже при трёх постах,
        когда обрезать на главной пока нечего. */
     var more = $('[data-tg-more]');
     if (more) more.removeAttribute('hidden');
+  }
+
+  /* ---------- Карусель постов на главной ---------- */
+  /* В окне один пост. Прокрутка нативная (overflow-x + scroll-snap), поэтому
+     свайп на телефоне работает без JS; стрелки лежат поверх карточки,
+     клавиши ← → Home End листают, когда фокус внутри карусели. */
+  function initTgCarousel() {
+    $$('[data-tg-carousel]').forEach(function (root) {
+      if (root.getAttribute('data-tg-ready')) return;
+      var track = $('[data-tg-feed]', root);
+      var prev = $('[data-tg-prev]', root);
+      var next = $('[data-tg-next]', root);
+      var status = $('[data-tg-status]', root);
+      if (!track) return;
+      root.setAttribute('data-tg-ready', 'true');
+
+      var slides = $$('.tg-post', track);
+      var count = slides.length;
+
+      slides.forEach(function (slide, i) {
+        slide.setAttribute('role', 'group');
+        slide.setAttribute('aria-roledescription', 'слайд');
+        slide.setAttribute('aria-label', 'Пост ' + (i + 1) + ' из ' + count);
+      });
+
+      /* Демо-карточка или единственный пост: листать нечего, стрелки скрыты */
+      if (count < 2) return;
+
+      var index = 0;
+      var lockUntil = 0;
+      var snapTimer = null;
+
+      function gap() {
+        var cs = window.getComputedStyle(track);
+        return parseFloat(cs.columnGap || cs.gap) || 0;
+      }
+      function step() {
+        return (slides[0] ? slides[0].getBoundingClientRect().width : track.clientWidth) + gap();
+      }
+      function current() {
+        return Math.max(0, Math.min(count - 1, Math.round(track.scrollLeft / step())));
+      }
+      function sync(i) {
+        if (prev) prev.disabled = i <= 0;
+        if (next) next.disabled = i >= count - 1;
+        if (status) status.textContent = 'Пост ' + (i + 1) + ' из ' + count;
+      }
+      function smooth() {
+        return !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      }
+      function go(target) {
+        index = Math.max(0, Math.min(count - 1, target));
+        var left = index * step();
+        var startedAt = track.scrollLeft;
+        lockUntil = Date.now() + 420;
+        if (typeof track.scrollTo === 'function') {
+          try { track.scrollTo({ left: left, behavior: smooth() ? 'smooth' : 'auto' }); }
+          catch (err) { track.scrollLeft = left; }
+        } else {
+          track.scrollLeft = left;
+        }
+        /* Страховка: если плавная прокрутка так и не началась (контейнер вне
+           области рендера, старый браузер), ставим позицию напрямую. */
+        clearTimeout(snapTimer);
+        snapTimer = setTimeout(function () {
+          if (Math.abs(track.scrollLeft - startedAt) < 2 && Math.abs(startedAt - left) > 2) {
+            track.scrollLeft = left;
+          }
+        }, 400);
+        sync(index);
+      }
+
+      if (prev) {
+        prev.hidden = false;
+        prev.addEventListener('click', function () { go(index - 1); });
+      }
+      if (next) {
+        next.hidden = false;
+        next.addEventListener('click', function () { go(index + 1); });
+      }
+
+      /* Свайп и колесо двигают scrollLeft сами — подхватываем позицию */
+      track.addEventListener('scroll', function () {
+        if (Date.now() < lockUntil) return;
+        var i = current();
+        if (i !== index) { index = i; sync(i); }
+      }, { passive: true });
+
+      root.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { go(index + 1); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft') { go(index - 1); e.preventDefault(); }
+        else if (e.key === 'Home') { go(0); e.preventDefault(); }
+        else if (e.key === 'End') { go(count - 1); e.preventDefault(); }
+      });
+
+      /* Ширина карточки изменилась — пересчитываем позицию без анимации */
+      window.addEventListener('resize', function () {
+        index = current();
+        track.scrollLeft = index * step();
+        sync(index);
+      });
+
+      sync(0);
+    });
   }
 
   /* ---------- Появление блоков при скролле ---------- */
