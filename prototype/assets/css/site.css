@@ -783,7 +783,7 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 .route-detail__icon {
   flex: none;
   margin-left: auto;
-  width: 52px; height: 52px;
+  width: 100px; height: 100px;
   display: grid; place-items: center;
   border: 1px solid var(--c-line-strong);
   border-radius: var(--r-sm);
@@ -792,7 +792,7 @@ textarea.field__control { min-height: 104px; resize: vertical; line-height: 1.55
 }
 .route-detail__icon[hidden] { display: none; }
 .route-detail__icon svg,
-.route-detail__icon img { width: 28px; height: 28px; }
+.route-detail__icon img { width: 50px; height: 50px; }
 .route-detail__icon img { object-fit: contain; }
 /* Стрелки «назад / вперёд» по бокам карточки этапа */
 .route__arrow {
