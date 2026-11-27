@@ -729,6 +729,29 @@
     '</article>';
   }
 
+  /* Профиль канала на странице «Все посты»: аватар, название, подписчики
+     и время последнего сбора ленты. Раскладку задаёт .tg-profile. */
+  function tgProfile(cfg, count) {
+    var avatar = cfg.photo
+      ? '<span class="tg-profile__avatar"><img src="' + esc(cfg.photo) +
+        '" alt="" width="48" height="48" loading="lazy" decoding="async"></span>'
+      : '<span class="tg-profile__avatar" aria-hidden="true">КХ</span>';
+    var meta = [];
+    if (cfg.subscribers) {
+      var subs = parseInt(String(cfg.subscribers).replace(/\s/g, ''), 10);
+      meta.push(esc(cfg.subscribers) + ' ' +
+        plural(isNaN(subs) ? count : subs, ['подписчик', 'подписчика', 'подписчиков']));
+    }
+    meta.push('в ленте ' + count + ' ' + plural(count, ['пост', 'поста', 'постов']));
+    if (cfg.updatedAt) meta.push('обновлено ' + tgTime(cfg.updatedAt));
+
+    return avatar +
+      '<div class="tg-profile__body">' +
+        '<p class="tg-profile__name">' + esc(cfg.title || ('@' + cfg.channel)) + '</p>' +
+        '<p class="tg-profile__meta">' + meta.join(' · ') + '</p>' +
+      '</div>';
+  }
+
   function initTelegram() {
     var cfg = window.HZ_TELEGRAM || {};
     var channel = String(cfg.channel || '').replace(/^@/, '').trim();
@@ -741,15 +764,37 @@
     });
     $$('[data-tg-fallback]').forEach(function (el) { el.setAttribute('hidden', ''); });
 
-    var feed = $('[data-tg-feed]');
-    var posts = cfg.posts ? [].concat(cfg.posts) : [];
     /* ConvertTo-Json в Windows PowerShell отдаёт один пост объектом, а не массивом. */
-    if (!feed || !posts.length) return;
+    var posts = cfg.posts ? [].concat(cfg.posts) : [];
+    if (!posts.length) return;
 
-    var narrow = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
-    feed.innerHTML = posts.slice(0, narrow ? 1 : 2).map(function (post) {
-      return tgCard(post, cfg);
-    }).join('');
+    /* Карточка канала есть только на странице «Все посты» */
+    var profile = $('[data-tg-profile]');
+    if (profile) {
+      profile.innerHTML = tgProfile(cfg, posts.length);
+      profile.removeAttribute('hidden');
+    }
+
+    var countEl = $('[data-tg-count]');
+    if (countEl) {
+      countEl.innerHTML = 'Всего <strong>' + posts.length + '</strong> ' +
+        plural(posts.length, ['публикация', 'публикации', 'публикаций']);
+    }
+
+    /* Один компонент на две страницы: главная задаёт data-tg-limit="3",
+       на странице «Все посты» атрибута нет — выводим весь снимок.
+       Лимит читается из разметки, поэтому HTML остаётся источником правды. */
+    $$('[data-tg-feed]').forEach(function (feed) {
+      var limit = parseInt(feed.getAttribute('data-tg-limit'), 10);
+      var shown = limit > 0 ? posts.slice(0, limit) : posts;
+      feed.innerHTML = shown.map(function (post) { return tgCard(post, cfg); }).join('');
+    });
+
+    /* «Все новости» показываем при подключённом канале: полная лента живёт
+       на отдельной странице, поэтому кнопка нужна даже при трёх постах,
+       когда обрезать на главной пока нечего. */
+    var more = $('[data-tg-more]');
+    if (more) more.removeAttribute('hidden');
   }
 
   /* ---------- Появление блоков при скролле ---------- */

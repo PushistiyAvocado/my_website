@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Все посты из Telegram — Ксения Хазиева | Прототип</title>
+  <meta name="description" content="Полная лента публикаций Telegram-канала Ксении Хазиевой: подборки объектов, разборы документов и ответы на частые вопросы. Демонстрационный прототип.">
+  <meta name="theme-color" content="#173B36">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <div class="proto-bar">
+    Демонстрационный прототип · <strong>не рабочая версия сайта</strong> · публикации приведены для примера
+  </div>
+
+  <header class="site-header" data-header>
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Ксения Хазиева — на главную">
+        <span class="brand__mark" aria-hidden="true">КХ</span>
+        <span>
+          <span class="brand__name">Ксения Хазиева</span>
+          <span class="brand__role">Специалист по недвижимости</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Основная навигация">
+        <a class="nav__link" href="catalog.html">Купить</a>
+        <a class="nav__link" href="index.html#sell">Продать</a>
+        <a class="nav__link" href="index.html#route">Сопровождение</a>
+        <a class="nav__link" href="telegram.html" aria-current="page">Блог</a>
+        <a class="nav__link" href="index.html#about">Обо мне</a>
+        <a class="nav__link" href="index.html#contacts">Контакты</a>
+      </nav>
+
+      <div class="header__actions">
+        <button class="btn btn--sm" type="button" data-open-dialog="dialog-consult">Связаться</button>
+        <button class="icon-btn burger" type="button" data-open-menu aria-expanded="false"
+                aria-controls="mobile-menu" aria-label="Открыть меню">
+          <span class="burger__lines" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container">
+      <nav aria-label="Хлебные крошки">
+        <ol class="breadcrumbs">
+          <li><a href="index.html">Главная</a></li>
+          <li><span aria-current="page">Все посты</span></li>
+        </ol>
+      </nav>
+
+      <div class="page-head" id="tg-top">
+        <div class="page-head__grid">
+          <div>
+            <p class="kicker">Блог</p>
+            <h1 class="h1 page-head__title">Все посты — в ленте канала</h1>
+            <p class="lead" style="margin-top: 16px;">
+              Здесь собраны все публикации Telegram-канала: подборки объектов,
+              заметки о проверках документов и ответы на частые вопросы.
+              Каждая карточка ведёт на исходный пост.
+            </p>
+          </div>
+
+          <div class="page-head__aside">
+            <p class="tiny" data-tg-count>Лента собирается из снимка канала</p>
+
+            <!-- Карточку канала заполняет app.js из assets/js/telegram-data.js -->
+            <div class="tg-profile" data-tg-profile hidden></div>
+
+            <a class="btn" data-tg-link href="https://t.me/" target="_blank" rel="noopener" hidden>
+              <span data-icon="tg"></span>
+              Открыть канал
+            </a>
+            <p class="tiny" data-tg-fallback>
+              Канал ещё не подключён: ниже показан пример оформления поста.
+              Как только появится ссылка, здесь будут все записи канала.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tg-feed tg-feed--grid" data-tg-feed id="tg-list" aria-label="Все записи Telegram-канала">
+        <!-- Пока канал не подключён (scripts/telegram-channel.txt пуст), видна
+             карточка-пример. Когда канал появится, app.js заменит её всеми
+             постами из assets/js/telegram-data.js. Лимита здесь нет: на главной
+             у ленты стоит data-tg-limit="3", на этой странице атрибут не задан. -->
+        <div class="tg-post" aria-label="Пример оформления поста в Telegram">
+          <div class="tg-post__head">
+            <span class="tg-post__avatar" aria-hidden="true">КХ</span>
+            <div>
+              <p class="tg-post__channel">Недвижимость с Ксенией</p>
+              <p class="tg-post__time">пример оформления · демо</p>
+            </div>
+          </div>
+          <p class="tg-post__text">
+            Разбираем, как читать выписку ЕГРН: какие разделы важны,
+            что означает «обременение» и когда стоит задавать вопросы продавцу.
+          </p>
+          <div class="tg-post__media">
+            <img src="assets/img/listing-office.svg" width="800" height="500" loading="lazy"
+                 alt="Демонстрационная иллюстрация интерьера — пример изображения к посту">
+          </div>
+          <p class="tg-post__foot">
+            <span>Пример публикации</span>
+            <span>289 просмотров</span>
+          </p>
+        </div>
+      </div>
+
+      <noscript>
+        <p class="small muted" style="margin-top: 24px;">
+          Для показа ленты нужен JavaScript: карточки собираются из локального
+          файла данных, потому что браузер не может читать Telegram напрямую.
+        </p>
+      </noscript>
+
+      <p class="catalog-note">
+        <strong>Лента собирается из веб-превью канала</strong> скриптом
+        <code>scripts/fetch-telegram.ps1</code> и обновляется по запросу
+        (Actions → «Telegram channel feed»). В карточку попадают текст, первое фото,
+        дата и просмотры; альбомы, видео и опросы пока не поддерживаются.
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="index.html" aria-label="Ксения Хазиева — на главную">
+            <span class="brand__mark" aria-hidden="true">КХ</span>
+            <span>
+              <span class="brand__name">Ксения Хазиева</span>
+              <span class="brand__role">Специалист по недвижимости</span>
+            </span>
+          </a>
+          <p class="footer__tagline">
+            Помогаю пройти путь от поиска недвижимости до получения ключей —
+            спокойно, с проверкой документов и понятными шагами.
+          </p>
+        </div>
+
+        <div>
+          <p class="footer__title">Разделы</p>
+          <ul class="footer__list">
+            <li><a href="catalog.html">Каталог объектов</a></li>
+            <li><a href="index.html#actual">Актуальные предложения</a></li>
+            <li><a href="index.html#route">Маршрут сделки</a></li>
+            <li><a href="index.html#about">Обо мне</a></li>
+            <li><a href="telegram.html" aria-current="page">Блог в Telegram</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer__title">Направления</p>
+          <ul class="footer__list">
+            <li><a href="catalog.html">Купить квартиру</a></li>
+            <li><a href="catalog.html">Купить дом или участок</a></li>
+            <li><a href="index.html#sell">Продать объект</a></li>
+            <li><a href="index.html#route">Проверка документов</a></li>
+            <li><a href="index.html#route">Сопровождение сделки</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer__title">Контакты</p>
+          <ul class="footer__list">
+            <li><span>Телефон — будет добавлен</span></li>
+            <li>
+              <span data-tg-fallback>Telegram — ссылка появится позже</span>
+              <a data-tg-link href="https://t.me/" target="_blank" rel="noopener" hidden>Telegram-канал</a>
+            </li>
+            <li><span>WhatsApp — ссылка появится позже</span></li>
+            <li><span>Екатеринбург и область</span></li>
+            <li><a href="index.html#contacts">Все контакты</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2026 Ксения Хазиева · демонстрационный прототип</p>
+        <div class="footer__legal">
+          <span>Политика обработки персональных данных — в разработке</span>
+          <span>Объекты и цены на сайте условные</span>
+          <a href="#main">Наверх</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="drawer" id="mobile-menu" hidden>
+    <div class="drawer__head">
+      <a class="brand" href="index.html" aria-label="Ксения Хазиева — на главную">
+        <span class="brand__mark" aria-hidden="true">КХ</span>
+        <span>
+          <span class="brand__name">Ксения Хазиева</span>
+          <span class="brand__role">Специалист по недвижимости</span>
+        </span>
+      </a>
+      <button class="icon-btn" type="button" data-close-menu aria-label="Закрыть меню">
+        <span data-icon="close"></span>
+      </button>
+    </div>
+
+    <nav class="drawer__nav" aria-label="Меню на телефоне">
+      <a class="drawer__link" href="catalog.html">Купить</a>
+      <a class="drawer__link" href="index.html#sell">Продать</a>
+      <a class="drawer__link" href="index.html#route">Сопровождение</a>
+      <a class="drawer__link" href="telegram.html" aria-current="page">Блог</a>
+      <a class="drawer__link" href="index.html#about">Обо мне</a>
+      <a class="drawer__link" href="index.html#contacts">Контакты</a>
+    </nav>
+
+    <div class="drawer__foot">
+      <button class="btn btn--block" type="button" data-open-dialog="dialog-consult">
+        Оставить заявку
+      </button>
+      <p class="drawer__note">Демонстрационный прототип · заявки не отправляются</p>
+    </div>
+  </div>
+
+  <dialog class="dialog" id="dialog-consult" aria-labelledby="tg-dialog-title">
+    <div class="dialog__panel">
+      <div class="dialog__head">
+        <div>
+          <p class="kicker">Заявка</p>
+          <h2 class="h3" id="tg-dialog-title">Связаться с Ксенией</h2>
+        </div>
+        <button class="icon-btn dialog__close" type="button" data-close-dialog aria-label="Закрыть окно">
+          <span data-icon="close"></span>
+        </button>
+      </div>
+
+      <form class="dialog__body" data-demo-form>
+        <div class="field">
+          <label class="field__label" for="t-name">Как к вам обращаться</label>
+          <input class="field__control" id="t-name" name="name" type="text"
+                 minlength="2" required placeholder="Имя" autocomplete="given-name">
+          <p class="field__error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="t-phone">Телефон</label>
+          <input class="field__control" id="t-phone" name="phone" type="tel"
+                 required placeholder="+7 (___) ___-__-__" autocomplete="tel">
+          <p class="field__error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="t-message">Что вас интересует</label>
+          <textarea class="field__control" id="t-message" name="message" style="min-height: 84px;"
+                    placeholder="Например: ищу двухкомнатную квартиру в Академическом до 12 млн"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" name="consent" required>
+            <span>Согласен(-на) на обработку персональных данных. В рабочей версии здесь появится ссылка на политику обработки.</span>
+          </label>
+          <p class="field__error" hidden></p>
+        </div>
+
+        <div class="form-result" data-form-result hidden></div>
+
+        <div class="dialog__foot">
+          <button class="btn" type="submit">Отправить заявку</button>
+          <button class="btn btn--ghost" type="button" data-close-dialog>Отмена</button>
+        </div>
+
+        <p class="tiny">
+          Демонстрационная форма: данные не отправляются и не сохраняются,
+          проверка полей работает только в браузере.
+        </p>
+      </form>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/telegram-data.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>

@@ -7,9 +7,12 @@ $void = @('area','base','br','col','embed','hr','img','input','link','meta','par
 $required = @{
   'index.html' = @('#search-form','#s-type','#s-city','#s-district','#s-rooms','#s-price-min','#s-price-max','#s-area-min','#search-result','#listings-grid','#actual','#mobile-menu','#dialog-consult','#toast','#route-detail')
   'catalog.html' = @('#catalog-grid','#catalog-count','#active-filters','#catalog-pagination','#catalog-sort','#filters-submit','#filters','#f-type','#f-city','#f-district','#f-rooms','#f-price-min','#f-price-max','#f-area-min','#f-area-max','#f-plot-min','#f-floor-min','#catalog-top','#mobile-menu','#dialog-consult','#toast')
+  'telegram.html' = @('#main','#tg-top','#tg-list','#mobile-menu','#dialog-consult','#toast')
 }
 
-foreach ($name in @('index.html','catalog.html')) {
+$pages = @('index.html','catalog.html','telegram.html')
+
+foreach ($name in $pages) {
   $path = Join-Path $root $name
   $raw = [IO.File]::ReadAllText($path)
   $text = [regex]::Replace($raw, '(?s)<!--.*?-->', '')
@@ -98,10 +101,26 @@ foreach ($name in @('index.html','catalog.html')) {
   $lines.Add("   dialog[open] count = $openDialogs (expected 0)")
 }
 
+# --- telegram.html намеренно не содержит каталога, поэтому проверка
+#     «id из app.js отсутствует на странице» к ней неприменима.
+# --- telegram.html: якоря, диалоги и маркеры-заглушки ---
+$raw = [IO.File]::ReadAllText((Join-Path $root 'telegram.html'))
+$pageIds = @([regex]::Matches($raw, '\sid="([^"]+)"') | ForEach-Object { $_.Groups[1].Value })
+$badAnchors = @()
+foreach ($m in [regex]::Matches($raw, 'href="#([^"]+)"')) {
+  $id = $m.Groups[1].Value
+  if ($id -and $pageIds -notcontains $id) { $badAnchors += "#$id" }
+}
+$lines.Add('== telegram.html: anchors without target = ' +
+  $(if ($badAnchors.Count) { ($badAnchors | Sort-Object -Unique) -join ', ' } else { 'none' }))
+$lines.Add("   dialog[open] count = " + [regex]::Matches($raw, '<dialog\b[^>]*\sopen\b').Count + ' (expected 0)')
+$leftovers = @([regex]::Matches($raw, '<!--\s*[A-Z-]*-PART\s*-->') | ForEach-Object { $_.Value })
+$lines.Add('   leftover placeholders = ' + $(if ($leftovers.Count) { $leftovers -join ', ' } else { 'none' }))
+
 $orphans = @()
 foreach ($r in $refs) {
   $found = $false
-  foreach ($name in @('index.html','catalog.html')) {
+  foreach ($name in $pages) {
     $raw = [IO.File]::ReadAllText((Join-Path $root $name))
     if ($raw -match ('\sid="' + [regex]::Escape($r) + '"')) { $found = $true; break }
   }

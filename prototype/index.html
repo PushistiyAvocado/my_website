@@ -34,7 +34,7 @@
         <a class="nav__link" href="catalog.html">Купить</a>
         <a class="nav__link" href="#sell">Продать</a>
         <a class="nav__link" href="#route">Сопровождение</a>
-        <a class="nav__link" href="#blog">Блог</a>
+        <a class="nav__link" href="telegram.html">Блог</a>
         <a class="nav__link" href="#about">Обо мне</a>
         <a class="nav__link" href="#contacts">Контакты</a>
       </nav>
@@ -500,91 +500,15 @@
       </div>
     </section>
 
-    <section class="section section--hairline" id="blog" aria-labelledby="blog-title">
-      <div class="container">
-        <div class="section__head">
-          <div class="stack-10">
-            <p class="kicker">Блог</p>
-            <h2 class="h2" id="blog-title">Разборы, которые помогают решать</h2>
-          </div>
-          <div class="head-aside stack-10">
-            <p class="small muted">
-              Планируемые темы. Тексты ещё не написаны — карточки показывают,
-              как будет устроен раздел.
-            </p>
-          </div>
-        </div>
-
-        <div class="grid grid--3">
-          <article class="post-card">
-            <div class="post-card__cover">
-              <img src="assets/img/listing-living.svg" width="800" height="600" loading="lazy"
-                   alt="Демонстрационная иллюстрация гостиной — обложка будущей статьи">
-            </div>
-            <div class="post-card__body">
-              <p class="post-card__cat">Проверка документов</p>
-              <h3 class="post-card__title">Что проверить в документах на квартиру до аванса</h3>
-              <p class="post-card__text">
-                Выписка ЕГРН, история переходов права, долги и обременения:
-                разбор по шагам, без юридического тумана.
-              </p>
-              <p class="post-card__meta">
-                <span>Разбор · 7 минут чтения</span>
-                <span class="tag">скоро</span>
-              </p>
-            </div>
-          </article>
-
-          <article class="post-card">
-            <div class="post-card__cover">
-              <img src="assets/img/listing-kitchen.svg" width="800" height="600" loading="lazy"
-                   alt="Демонстрационная иллюстрация кухни — обложка будущей статьи">
-            </div>
-            <div class="post-card__body">
-              <p class="post-card__cat">Покупка</p>
-              <h3 class="post-card__title">Как выбрать район, если работа в центре, а бюджет ограничен</h3>
-              <p class="post-card__text">
-                Транспорт, инфраструктура, перспективы застройки и то,
-                как эти факторы отражаются на цене через несколько лет.
-              </p>
-              <p class="post-card__meta">
-                <span>Гид · 9 минут чтения</span>
-                <span class="tag">скоро</span>
-              </p>
-            </div>
-          </article>
-
-          <article class="post-card">
-            <div class="post-card__cover">
-              <img src="assets/img/listing-house.svg" width="800" height="600" loading="lazy"
-                   alt="Демонстрационная иллюстрация загородного дома — обложка будущей статьи">
-            </div>
-            <div class="post-card__body">
-              <p class="post-card__cat">Загородная недвижимость</p>
-              <h3 class="post-card__title">Дом за городом: на что смотреть, кроме самого дома</h3>
-              <p class="post-card__text">
-                Подъездные пути, коммуникации, границы участка и документы на землю —
-                то, что часто выясняется слишком поздно.
-              </p>
-              <p class="post-card__meta">
-                <span>Разбор · 8 минут чтения</span>
-                <span class="tag">скоро</span>
-              </p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--surface" aria-labelledby="tg-title">
+    <section class="section section--surface" id="blog" aria-labelledby="tg-title">
       <div class="container">
         <div class="tg-wrap">
           <div class="stack-16">
-            <p class="kicker">Телеграм</p>
+            <p class="kicker">Блог · Telegram</p>
             <h2 class="h2" id="tg-title">Новые объекты и короткие разборы — в канале</h2>
             <p class="lead">
-              В канале планируются подборки объектов, заметки о проверках документов
-              и ответы на частые вопросы покупателей.
+              Подборки объектов, заметки о проверках документов и ответы на частые вопросы
+              покупателей. Ниже — три последних поста, полная лента — на отдельной странице.
             </p>
             <div class="row-16">
               <a class="btn" data-tg-link href="https://t.me/" target="_blank" rel="noopener" hidden>
@@ -599,30 +523,39 @@
             </div>
           </div>
 
-          <div class="tg-feed" data-tg-feed aria-label="Записи Telegram-канала">
-            <!-- Пока канал не подключён (scripts/telegram-channel.txt пуст), видна
-                 карточка-пример. Когда канал появится, app.js заменит её реальными
-                 постами из assets/js/telegram-data.js. -->
-            <div class="tg-post" aria-label="Пример оформления поста в Telegram">
-              <div class="tg-post__head">
-                <span class="tg-post__avatar" aria-hidden="true">КХ</span>
-                <div>
-                  <p class="tg-post__channel">Недвижимость с Ксенией</p>
-                  <p class="tg-post__time">пример оформления · демо</p>
+          <div class="tg-col">
+            <div class="tg-feed" data-tg-feed data-tg-limit="3" aria-label="Последние записи Telegram-канала">
+              <!-- Пока канал не подключён (scripts/telegram-channel.txt пуст), видна
+                   карточка-пример. Когда канал появится, app.js заменит её тремя
+                   последними постами из assets/js/telegram-data.js. -->
+              <div class="tg-post" aria-label="Пример оформления поста в Telegram">
+                <div class="tg-post__head">
+                  <span class="tg-post__avatar" aria-hidden="true">КХ</span>
+                  <div>
+                    <p class="tg-post__channel">Недвижимость с Ксенией</p>
+                    <p class="tg-post__time">пример оформления · демо</p>
+                  </div>
                 </div>
+                <p class="tg-post__text">
+                  Разбираем, как читать выписку ЕГРН: какие разделы важны,
+                  что означает «обременение» и когда стоит задавать вопросы продавцу.
+                </p>
+                <div class="tg-post__media">
+                  <img src="assets/img/listing-office.svg" width="800" height="500" loading="lazy"
+                       alt="Демонстрационная иллюстрация интерьера — пример изображения к посту">
+                </div>
+                <p class="tg-post__foot">
+                  <span>Пример публикации</span>
+                  <span>289 просмотров</span>
+                </p>
               </div>
-              <p class="tg-post__text">
-                Разбираем, как читать выписку ЕГРН: какие разделы важны,
-                что означает «обременение» и когда стоит задавать вопросы продавцу.
-              </p>
-              <div class="tg-post__media">
-                <img src="assets/img/listing-office.svg" width="800" height="500" loading="lazy"
-                     alt="Демонстрационная иллюстрация интерьера — пример изображения к посту">
-              </div>
-              <p class="tg-post__foot">
-                <span>Пример публикации</span>
-                <span>289 просмотров</span>
-              </p>
+            </div>
+
+            <!-- Кнопка появляется, только если постов в снимке больше, чем помещается
+                 в ленту: иначе она вела бы на страницу с тем же содержимым. -->
+            <div class="tg-more" data-tg-more hidden>
+              <a class="btn" href="telegram.html">Все новости</a>
+              <p class="tiny">Полная лента постов и подборок — в Telegram-канале</p>
             </div>
           </div>
         </div>
@@ -644,8 +577,8 @@
               <a class="btn btn--ghost" href="catalog.html">Смотреть объекты</a>
             </div>
             <p class="tiny">
-              Телефон, мессенджеры и ссылка на Telegram-канал появятся здесь после
-              согласования контактных данных. Сейчас в блоке только заглушки.
+              Телефон и WhatsApp появятся здесь после согласования контактных данных.
+              Telegram-канал уже доступен — ссылка в блоке контактов ниже.
             </p>
           </div>
 
@@ -721,7 +654,7 @@
             <li><a href="#actual">Актуальные предложения</a></li>
             <li><a href="#route">Маршрут сделки</a></li>
             <li><a href="#about">Обо мне</a></li>
-            <li><a href="#blog">Блог</a></li>
+            <li><a href="telegram.html">Блог в Telegram</a></li>
           </ul>
         </div>
 
@@ -780,7 +713,7 @@
       <a class="drawer__link" href="catalog.html">Купить</a>
       <a class="drawer__link" href="#sell">Продать</a>
       <a class="drawer__link" href="#route">Сопровождение</a>
-      <a class="drawer__link" href="#blog">Блог</a>
+      <a class="drawer__link" href="telegram.html">Блог</a>
       <a class="drawer__link" href="#about">Обо мне</a>
       <a class="drawer__link" href="#contacts">Контакты</a>
     </nav>
