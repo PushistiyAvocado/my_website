@@ -10,6 +10,12 @@ permissions:
   pages: write
   id-token: write
 
+# Один деплой Pages за раз: параллельный запуск (push + ручной dispatch)
+# роняет шаг deploy-pages с «Deployment failed, try again later».
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
 jobs:
   deploy:
     environment:
