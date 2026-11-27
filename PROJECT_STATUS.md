@@ -51,12 +51,12 @@ my_website/
 │     ├─ css/site.css    51.4 KB  # компоненты + адаптив
 │     ├─ js/app.js       33.6 KB  # вся интерактивность (в т. ч. initTelegram)
 │     ├─ js/data.js      12.2 KB  # 9 демо-объектов + тексты этапов маршрута
-│     ├─ js/telegram-data.js 1.1 KB # лента канала: генерируется скриптом, вручную не править
+│     ├─ js/telegram-data.js 7.3 KB # снимок ленты @hazieva_realty: генерируется скриптом
 │     ├─ js/icons.js      2.6 KB  # спрайт ICONS + render()
 │     └─ img/                     # SVG-плейсхолдеры объектов, портрет-заглушка, фото
 ├─ scripts/                       # не публикуется на сайт, работает локально и в Actions
 │  ├─ fetch-telegram.ps1          # t.me/s/<канал> → prototype/assets/js/telegram-data.js
-│  └─ telegram-channel.txt        # сюда вписывается @username канала (одна строка)
+│  └─ telegram-channel.txt        # @username канала — активная строка @hazieva_realty
 ├─ _shots/                        # стенды <iframe> + headless-тесты + скриншоты (трекается)
 ├─ _check.ps1 / _check.txt        # статические проверки разметки/JS/CSS
 ├─ serve.ps1 / start.cmd / restart.cmd   # локальный сервер на 127.0.0.1:5173
@@ -215,12 +215,21 @@ my_website/
 Дальше `e012a64` («увеличение иконок») правит одну строку в `site.css`:
 `.route-detail__icon` 52×52 → 100×100, картинка 28 → 50px.
 
-**Незакоммиченное в рабочем дереве:** весь блок Telegram-ленты из §4.2 (`scripts/`,
+**Закоммичено и опубликовано:** `b885557` — весь блок Telegram-ленты из §4.2 (`scripts/`,
 `.github/workflows/telegram.yml`, `prototype/assets/js/telegram-data.js`, правки
-`index.html`/`catalog.html`/`site.css`/`app.js`) и обновлённые документы; плюс
-`media/icons/recraft-svg-converter.svg` (untracked) — решить: добавить в репозиторий как источник
-иконки или удалить. Ветка `main` пока в синхроне с `origin/main` — публикация начинается с
-`git push`.
+`index.html`/`catalog.html`/`site.css`/`app.js`, документы); прогон деплоя упал на шаге
+`deploy-pages` (transient), поэтому следом `2e9cd08` добавил в `deploy.yml` группу
+`concurrency: pages` — публикация прошла успешно (run #27). Живой сайт
+`https://pushistiyavocado.github.io/my_website/` отдаёт ленту канала: 2 карточки реальных
+постов, 5 ссылок `t.me/hazieva_realty`, ни одна заглушка `data-tg-fallback` не видна.
+В рабочем дереве остался только `media/icons/recraft-svg-converter.svg` (untracked, не
+используется сайтом) — решить: хранить как исходник или удалить.
+
+**Рабочая папка `E:\Building web site\Недвижемость` синхронизирована из репозитория** (15 файлов:
+`index.html`, `catalog.html`, `app.js`, `site.css`, `telegram-data.js`, `scripts/*`, оба
+workflow, `docs/*`, `PROJECT_STATUS.md`, `_check.txt`). Она отставала на несколько правок,
+поэтому следующий `deploy.cmd` без этой синхронизации откатил бы ленту Telegram обратно
+в демо-состояние.
 
 ## 6. Текущее состояние
 
