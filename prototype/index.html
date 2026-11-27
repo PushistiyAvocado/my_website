@@ -587,34 +587,43 @@
               и ответы на частые вопросы покупателей.
             </p>
             <div class="row-16">
-              <button class="btn btn--outline" type="button" data-open-dialog="dialog-consult">
+              <a class="btn" data-tg-link href="https://t.me/" target="_blank" rel="noopener" hidden>
+                <span data-icon="tg"></span>
+                Открыть канал
+              </a>
+              <button class="btn btn--outline" type="button" data-open-dialog="dialog-consult" data-tg-fallback>
                 <span data-icon="tg"></span>
                 Узнать про Telegram
               </button>
-              <span class="tag tag--demo">ссылка на канал появится позже</span>
+              <span class="tag tag--demo" data-tg-fallback>ссылка на канал появится позже</span>
             </div>
           </div>
 
-          <div class="tg-post" aria-label="Пример оформления поста в Telegram">
-            <div class="tg-post__head">
-              <span class="tg-post__avatar" aria-hidden="true">КХ</span>
-              <div>
-                <p class="tg-post__channel">Недвижимость с Ксенией</p>
-                <p class="tg-post__time">пример оформления · демо</p>
+          <div class="tg-feed" data-tg-feed aria-label="Записи Telegram-канала">
+            <!-- Пока канал не подключён (scripts/telegram-channel.txt пуст), видна
+                 карточка-пример. Когда канал появится, app.js заменит её реальными
+                 постами из assets/js/telegram-data.js. -->
+            <div class="tg-post" aria-label="Пример оформления поста в Telegram">
+              <div class="tg-post__head">
+                <span class="tg-post__avatar" aria-hidden="true">КХ</span>
+                <div>
+                  <p class="tg-post__channel">Недвижимость с Ксенией</p>
+                  <p class="tg-post__time">пример оформления · демо</p>
+                </div>
               </div>
+              <p class="tg-post__text">
+                Разбираем, как читать выписку ЕГРН: какие разделы важны,
+                что означает «обременение» и когда стоит задавать вопросы продавцу.
+              </p>
+              <div class="tg-post__media">
+                <img src="assets/img/listing-office.svg" width="800" height="500" loading="lazy"
+                     alt="Демонстрационная иллюстрация интерьера — пример изображения к посту">
+              </div>
+              <p class="tg-post__foot">
+                <span>Пример публикации</span>
+                <span>289 просмотров</span>
+              </p>
             </div>
-            <p class="tg-post__text">
-              Разбираем, как читать выписку ЕГРН: какие разделы важны,
-              что означает «обременение» и когда стоит задавать вопросы продавцу.
-            </p>
-            <div class="tg-post__media">
-              <img src="assets/img/listing-office.svg" width="800" height="500" loading="lazy"
-                   alt="Демонстрационная иллюстрация интерьера — пример изображения к посту">
-            </div>
-            <p class="tg-post__foot">
-              <span>Пример публикации</span>
-              <span>289 просмотров</span>
-            </p>
           </div>
         </div>
       </div>
@@ -647,7 +656,9 @@
             </p>
             <p>
               <strong>Мессенджеры</strong><br>
-              WhatsApp и Telegram — ссылки появятся позже
+              WhatsApp — ссылка появится позже<br>
+              <span data-tg-fallback>Telegram — ссылка появится позже</span>
+              <a data-tg-link href="https://t.me/" target="_blank" rel="noopener" hidden>Telegram-канал</a>
             </p>
             <p>
               <strong>Город и район работы</strong><br>
@@ -729,7 +740,10 @@
           <p class="footer__title">Контакты</p>
           <ul class="footer__list">
             <li><span>Телефон — будет добавлен</span></li>
-            <li><span>Telegram — ссылка появится позже</span></li>
+            <li>
+              <span data-tg-fallback>Telegram — ссылка появится позже</span>
+              <a data-tg-link href="https://t.me/" target="_blank" rel="noopener" hidden>Telegram-канал</a>
+            </li>
             <li><span>WhatsApp — ссылка появится позже</span></li>
             <li><span>Екатеринбург и область</span></li>
             <li><a href="#contacts">Все контакты</a></li>
@@ -838,6 +852,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/telegram-data.js" defer></script>
   <script src="assets/js/icons.js" defer></script>
   <script src="assets/js/app.js" defer></script>
 </body>

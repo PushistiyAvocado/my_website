@@ -33,6 +33,7 @@
 ```
 my_website/
 ├─ .github/workflows/deploy.yml   # push в main → публикация ./prototype на Pages
+├─ .github/workflows/telegram.yml # собирает ленту Telegram-канала по запросу и коммитит её
 ├─ docs/
 │  ├─ README.md                   # состав, запуск, деплой, проверки, ограничения
 │  ├─ 01-design-concept.md        # позиционирование, палитра, типографика, анимация
@@ -43,15 +44,19 @@ my_website/
 │  ├─ icons/                      # SVG-иконки этапов/услуг
 │  └─ photo/                      # исходные фотографии
 ├─ prototype/                     # ← это и есть сайт
-│  ├─ index.html       43.6 KB    # главная
-│  ├─ catalog.html     21.1 KB    # каталог: фильтры, сортировка, пагинация
+│  ├─ index.html       44.7 KB    # главная
+│  ├─ catalog.html     21.3 KB    # каталог: фильтры, сортировка, пагинация
 │  └─ assets/
 │     ├─ css/tokens.css   4.6 KB  # токены: цвет, шрифты, отступы, --tap, --focus-ring
-│     ├─ css/site.css    50.0 KB  # компоненты + адаптив
-│     ├─ js/app.js       29.9 KB  # вся интерактивность
+│     ├─ css/site.css    51.4 KB  # компоненты + адаптив
+│     ├─ js/app.js       33.6 KB  # вся интерактивность (в т. ч. initTelegram)
 │     ├─ js/data.js      12.2 KB  # 9 демо-объектов + тексты этапов маршрута
+│     ├─ js/telegram-data.js 1.1 KB # лента канала: генерируется скриптом, вручную не править
 │     ├─ js/icons.js      2.6 KB  # спрайт ICONS + render()
 │     └─ img/                     # SVG-плейсхолдеры объектов, портрет-заглушка, фото
+├─ scripts/                       # не публикуется на сайт, работает локально и в Actions
+│  ├─ fetch-telegram.ps1          # t.me/s/<канал> → prototype/assets/js/telegram-data.js
+│  └─ telegram-channel.txt        # сюда вписывается @username канала (одна строка)
 ├─ _shots/                        # стенды <iframe> + headless-тесты + скриншоты (трекается)
 ├─ _check.ps1 / _check.txt        # статические проверки разметки/JS/CSS
 ├─ serve.ps1 / start.cmd / restart.cmd   # локальный сервер на 127.0.0.1:5173
@@ -78,7 +83,7 @@ my_website/
 6. **Итерации по иконкам и блоку «Маршрут сделки»** — серия коммитов от `83ec04e` до `e012a64`
    (размеры иконок 50→55→100px, откаты, замена иконок на SVG из `media/icons`).
 
-### 4.1. Последняя работа: стрелки листания этапов по бокам карточки
+### 4.1. Работа перед этим: стрелки листания этапов по бокам карточки
 
 Задача: убрать стрелки из шапки карточки этапа и поставить их **по бокам карточки**.
 
@@ -154,6 +159,49 @@ my_website/
 и `route__arrow--prev/next` есть, `route-detail__nav` / `route-detail__actions` — 0,
 в `site.css` есть `.route-shell`, `prev detail next`, `justify-self: start`.
 
+### 4.2. Последняя работа: живая лента Telegram-канала без бэкенда
+
+Задача: показать в блоке главной «Новые объекты и короткие разборы — в канале» **настоящие**
+посты канала, не переделывая статический хостинг и не заводя сервер.
+
+Сначала проверено, что прямой запрос из браузера невозможен: у веб-превью `https://t.me/s/<канал>`
+нет `Access-Control-Allow-Origin` (это обычная HTML-страница для людей), а Bot API требует токен,
+который нельзя держать в клиентском JS. Поэтому выбран вариант **снимок на сборке**: лента
+собирается скриптом (локально или в GitHub Actions) и публикуется как обычный JS-файл — CORS
+не нужен, токенов нет, сайт остаётся статическим.
+
+| Файл | Роль |
+| --- | --- |
+| `scripts/fetch-telegram.ps1` | скачивает `t.me/s/<канал>`, разбирает посты (id, ссылка, дата, просмотры, первое фото, текст), чистит разметку по белому списку, пишет `telegram-data.js`. Ключи `-Channel`, `-OutFile`, `-MaxPosts` (3), `-MaxChars` (700); канал также берётся из `TELEGRAM_CHANNEL` или `scripts/telegram-channel.txt` |
+| `scripts/telegram-channel.txt` | единственная настройка: активная строка — `@hazieva_realty` (канал Ксении), остальное — комментарии-подсказки |
+| `.github/workflows/telegram.yml` | только `workflow_dispatch` с полем `channel` (расписания нет — обновление по запросу); собирает файл и коммитит в `main`, дальше срабатывает `deploy.yml` |
+| `prototype/assets/js/telegram-data.js` | `window.HZ_TELEGRAM` — снимок ленты. Пока канал не задан, это пустой объект: скрипт без канала не трогает существующий файл, а если файла нет — создаёт такую заглушку, чтобы страницы не получали 404 |
+| `prototype/assets/js/app.js` | `TG_MONTHS`, `tgTime()`, `tgCard()`, `initTelegram()`: если канал есть — показывает `[data-tg-link]`, скрывает `[data-tg-fallback]`, рисует 2 карточки в `[data-tg-feed]` (на ≤720px — одну) |
+| `prototype/index.html`, `catalog.html` | обёртка `.tg-feed[data-tg-feed]` вокруг демо-карточки; кнопка «Открыть канал» и пара ссылок в футере/контактах скрыты до подключения канала; подключён `assets/js/telegram-data.js` (defer, до `icons.js`/`app.js`) |
+| `prototype/assets/css/site.css` | `.tg-feed`, `.tg-post__avatar--photo`, `.tg-post__text a`, `.tg-post__media img` (`max-height: 300px`), `.tg-post__more`, плюс `[data-tg-fallback][hidden], [data-tg-link][hidden] { display: none !important; }` — без этого `hidden` не работает, т.к. `.btn`/`.tag` задают `display` |
+
+Безопасность: текст поста вставляется через `innerHTML`, поэтому скрипт оставляет только
+`b`, `strong`, `i`, `em`, `u`, `s`, `del`, `code`, `pre`, `blockquote`, `br` и ссылки
+`http(s)`/`mailto`; `script`, `iframe`, `style`, `on*`-атрибуты и прочее вырезаются вместе с тегом;
+после обрезки незакрытые теги закрываются. Ссылки получают `target="_blank" rel="noopener nofollow"`.
+Остальные поля (название, дата, просмотры) выводятся через `esc()`.
+
+**Проверено локально:**
+
+- **канал Ксении `@hazieva_realty`** (27.11.2026): 3 поста (id 709–711), название
+  «Ксения Хазиева|Риелтор|Екатеринбург», 183 подписчика, фото на `cdn4.telesco.pe`,
+  просмотры 20 / 46 / 43, тексты с эмодзи, `<b>`/`<u>`/`<br>` и обрезкой на 700 знаках;
+- прогон по реальным каналам (`@durov`, `@telegram`): 3 и 2 поста, эмодзи, `<br>`, ссылки,
+  фото с `cdn*.telesco.pe`, просмотры («579 тыс.», «1,09 млн»), подписчики, название канала;
+- `-Channel` принимает `@name`, `name`, `https://t.me/name`, `t.me/s/name`, `t.me/name/123`;
+- пустой канал → код выхода 0: существующий `telegram-data.js` не меняется, а если файла нет —
+  создаётся пустая заглушка (иначе страницы получали бы 404 по этому скрипту);
+  закрытый/несуществующий канал → код 1 с сообщением;
+- `ConvertTo-Json` для одного поста отдаёт объект, а не массив — `initTelegram()` нормализует
+  через `[].concat(cfg.posts)`;
+- сгенерированный `telegram-data.js` и `app.js` прошли проверку синтаксиса парсером JScript;
+- `_check.ps1` — без ошибок: `index.html`/`catalog.html` не потеряли обязательных `id` и якорей.
+
 ## 5. Изменённые файлы (главный коммит `6ec3e87`)
 
 | Файл | Что изменилось |
@@ -167,9 +215,12 @@ my_website/
 Дальше `e012a64` («увеличение иконок») правит одну строку в `site.css`:
 `.route-detail__icon` 52×52 → 100×100, картинка 28 → 50px.
 
-**Незакоммиченное в рабочем дереве:** `media/icons/recraft-svg-converter.svg` (untracked) —
-решить: добавить в репозиторий как источник иконки или удалить. Ветка `main` в синхроне
-с `origin/main`.
+**Незакоммиченное в рабочем дереве:** весь блок Telegram-ленты из §4.2 (`scripts/`,
+`.github/workflows/telegram.yml`, `prototype/assets/js/telegram-data.js`, правки
+`index.html`/`catalog.html`/`site.css`/`app.js`) и обновлённые документы; плюс
+`media/icons/recraft-svg-converter.svg` (untracked) — решить: добавить в репозиторий как источник
+иконки или удалить. Ветка `main` пока в синхроне с `origin/main` — публикация начинается с
+`git push`.
 
 ## 6. Текущее состояние
 
@@ -182,6 +233,10 @@ my_website/
   `--c-line-strong #d7d5cc`, `--focus-ring`.
 - Текущие размеры иконок: `.step__icon` 55×55 (картинка 50px), `.route-detail__icon` 100×100
   (картинка 50px).
+- Telegram-лента: канал `@hazieva_realty` подключён, `telegram-data.js` собран (3 поста,
+  название канала, 183 подписчика, фото, просмотры); на главной вместо демо-карточки стоят
+  реальные посты, ссылки на канал показаны. Обновление — **по запросу**: Actions →
+  «Telegram channel feed» → Run workflow (cron убран).
 
 ## 7. Оставшиеся задачи
 
@@ -232,6 +287,20 @@ my_website/
     остальные страницы (услуги, карточка объекта, блог, `/privacy`), SEO (`sitemap.xml`,
     JSON-LD), админка и модерация.
 
+### 7.4. Telegram-лента
+
+16. **Обновлять ленту по запросу:** Actions → **Telegram channel feed** → **Run workflow**
+    (расписания нет: cron `17 */2 * * *` убран намеренно). После нового поста в канале
+    достаточно одного запуска — workflow перезапишет `telegram-data.js` и закоммитит его.
+17. **Проверить блок на реальных постах:** 1200 / 820 / 390px, длинный текст (обрезка 700 знаков
+    + ссылка «Читать в Telegram»), пост без фото, альбом из нескольких фото, эмодзи и `<br>`.
+    При необходимости поправить `-MaxChars` / `-MaxPosts` в `telegram.yml`.
+18. **Если канал станет закрытым** (веб-превью `t.me/s/<канал>` перестанет открываться) — снимок
+    не соберётся: либо официальный виджет `https://t.me/<канал>?embed=1` в `<iframe>`, либо
+    Bot API на Этапе 4 (`docs/03-architecture.md` §9).
+19. **Автопостинг объектов в канал** из будущей админки остаётся задачей Этапа 4 — текущая лента
+    только читает канал.
+
 ## 8. Как проверять и публиковать
 
 ```powershell
@@ -241,6 +310,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\serve.ps1
 
 # статические проверки → отчёт в _check.txt
 powershell -NoProfile -ExecutionPolicy Bypass -File .\_check.ps1
+
+# лента Telegram-канала → prototype/assets/js/telegram-data.js
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\fetch-telegram.ps1 -Channel '@channel'
 
 # headless-проверка новой раскладки (пример: позиции стрелок на 1440px)
 #   Chrome --headless=new --dump-dom --window-size=1440,900 <стенд из _shots>

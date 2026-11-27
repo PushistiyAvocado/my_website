@@ -1,7 +1,7 @@
 == index.html : nesting errors = 0
    duplicate ids: none
    missing required ids: none
-   data-header=1 | data-open-menu=1 | data-close-menu=1 | data-fav=0 | data-quick-type=0 | data-open-filters=0 | data-close-filters=0 | data-reset-filters=0 | data-demo-form=2 | data-form-result=2 | data-icon=6 | data-open-dialog=6 | data-close-dialog=2 | data-step=6 | data-close=3 | data-clear=0 | data-page=0
+   data-header=1 | data-open-menu=1 | data-close-menu=1 | data-fav=0 | data-quick-type=0 | data-open-filters=0 | data-close-filters=0 | data-reset-filters=0 | data-demo-form=2 | data-form-result=2 | data-icon=7 | data-open-dialog=6 | data-close-dialog=2 | data-step=6 | data-close=3 | data-clear=0 | data-page=0
 == catalog.html : nesting errors = 0
    duplicate ids: none
    missing required ids: none
@@ -16,6 +16,6 @@
 == ids used in app.js but absent on BOTH pages = none
 == data.js : braces 22/22, parens 3/3, brackets 11/11 OK
 == icons.js : braces 4/4, parens 8/8, brackets 4/4 OK
-== app.js : braces 7/7, parens 22/22, brackets 14/14 OK
+== app.js : braces 7/7, parens 23/23, brackets 8/8 OK
 == site.css: "-clamp(" count = 0 (expected 0)
-== site.css: braces 421/421
+== site.css: braces 433/433

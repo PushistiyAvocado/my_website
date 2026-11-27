@@ -681,6 +681,77 @@
     select(0);
   }
 
+  /* ---------- Лента Telegram-канала ---------- */
+  /* Запрос к t.me из браузера невозможен: у веб-превью канала нет CORS-заголовков,
+     а Bot API требует секретный токен. Поэтому посты заранее собирает
+     scripts/fetch-telegram.ps1 (GitHub Actions → .github/workflows/telegram.yml)
+     и складывает в assets/js/telegram-data.js. Пока канал не подключён, файл
+     содержит пустой объект и блок остаётся в демонстрационном виде. */
+  var TG_MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+                   'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+
+  function tgTime(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    var hh = d.getHours();
+    var mm = d.getMinutes();
+    return d.getDate() + ' ' + TG_MONTHS[d.getMonth()] + ' в ' +
+      (hh < 10 ? '0' + hh : hh) + ':' + (mm < 10 ? '0' + mm : mm);
+  }
+
+  /* Текст поста скрипт уже почистил: разрешены только br, b, strong, i, em, u,
+     s, del, code, pre, blockquote и ссылки http(s)/mailto. Поэтому text
+     вставляется как разметка, а всё остальное — через esc(). */
+  function tgCard(post, cfg) {
+    var avatar = cfg.photo
+      ? '<span class="tg-post__avatar tg-post__avatar--photo"><img src="' + esc(cfg.photo) +
+        '" alt="" width="34" height="34" loading="lazy" decoding="async"></span>'
+      : '<span class="tg-post__avatar" aria-hidden="true">КХ</span>';
+    var photo = post.photo
+      ? '<div class="tg-post__media"><img src="' + esc(post.photo) +
+        '" alt="Изображение из записи Telegram-канала" loading="lazy" decoding="async"></div>'
+      : '';
+
+    return '<article class="tg-post">' +
+      '<div class="tg-post__head">' + avatar +
+        '<div>' +
+          '<p class="tg-post__channel">' + esc(cfg.title || ('@' + cfg.channel)) + '</p>' +
+          '<p class="tg-post__time">' + esc(tgTime(post.datetime)) + '</p>' +
+        '</div>' +
+      '</div>' +
+      (post.text ? '<div class="tg-post__text">' + post.text + '</div>' : '') +
+      photo +
+      '<p class="tg-post__foot">' +
+        '<a class="tg-post__more" href="' + esc(post.url) + '" target="_blank" rel="noopener">Читать в Telegram</a>' +
+        (post.views ? '<span>' + esc(post.views) + ' просмотров</span>' : '') +
+      '</p>' +
+    '</article>';
+  }
+
+  function initTelegram() {
+    var cfg = window.HZ_TELEGRAM || {};
+    var channel = String(cfg.channel || '').replace(/^@/, '').trim();
+    if (!channel) return;
+
+    /* Канал известен: показываем живые ссылки вместо заглушек. */
+    $$('[data-tg-link]').forEach(function (el) {
+      el.setAttribute('href', 'https://t.me/' + channel);
+      el.removeAttribute('hidden');
+    });
+    $$('[data-tg-fallback]').forEach(function (el) { el.setAttribute('hidden', ''); });
+
+    var feed = $('[data-tg-feed]');
+    var posts = cfg.posts ? [].concat(cfg.posts) : [];
+    /* ConvertTo-Json в Windows PowerShell отдаёт один пост объектом, а не массивом. */
+    if (!feed || !posts.length) return;
+
+    var narrow = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+    feed.innerHTML = posts.slice(0, narrow ? 1 : 2).map(function (post) {
+      return tgCard(post, cfg);
+    }).join('');
+  }
+
   /* ---------- Появление блоков при скролле ---------- */
   var revealObserver = null;
   function revealScan() {
@@ -724,6 +795,7 @@
     initHomeSearch();
     initCatalog();
     initRoute();
+    initTelegram();
     syncFavs();
     revealScan();
   }

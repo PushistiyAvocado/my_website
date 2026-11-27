@@ -1,0 +1,51 @@
+name: Telegram channel feed
+
+# Собирает последние посты публичного Telegram-канала в
+# prototype/assets/js/telegram-data.js и коммитит файл в main.
+# Запускается ТОЛЬКО вручную (Actions → Run workflow): расписания нет,
+# лента обновляется по запросу.
+# Коммит в main автоматически запускает Deploy from folder → GitHub Pages,
+# поэтому сайт обновляется без ручных действий.
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: 'Канал (@username или ссылка t.me/...) — пусто = scripts/telegram-channel.txt'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+# Два запуска одновременно не нужны: они пишут один и тот же файл.
+concurrency:
+  group: telegram-feed
+  cancel-in-progress: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Собрать ленту канала
+        env:
+          # Приоритет: параметр ручного запуска → переменная репозитория →
+          # scripts/telegram-channel.txt (см. файл, там описано).
+          TELEGRAM_CHANNEL: ${{ inputs.channel || vars.TELEGRAM_CHANNEL }}
+        run: pwsh -NoProfile -File ./scripts/fetch-telegram.ps1
+
+      - name: Закоммитить изменения
+        run: |
+          FILE="prototype/assets/js/telegram-data.js"
+          if [ -z "$(git status --porcelain -- "$FILE")" ]; then
+            echo "Лента не изменилась — коммит не нужен."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$FILE"
+          git commit -m "Telegram: обновление ленты канала"
+          git push
